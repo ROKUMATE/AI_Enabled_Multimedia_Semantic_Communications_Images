@@ -1,0 +1,32 @@
+{
+  "image_id": "sample",
+  "original_oar": {
+    "objects": [],
+    "attributes": {},
+    "relations": []
+  },
+  "decoded_oar": {
+    "objects": [],
+    "attributes": {},
+    "relations": []
+  },
+  "encoded_packet": {
+    "payload": "eNqrVkosKSnKTCotSS1Wsqqu1VHKT8pKTS4BcqJjdZSKUnMSSzLz88DcWgB6CRA1",
+    "bit_estimate": 384,
+    "encoding": "zlib+base64"
+  },
+  "transmitted_packet": {
+    "payload": "eNqrVkosKSnKTCotSS1Wsqqu1VHKT8pKTS4BcqJjdZSKUnMSSzLz88DcWgB6CRA1",
+    "bit_estimate": 384,
+    "encoding": "zlib+base64"
+  },
+  "semantic_text": "No recognizable objects were transmitted through the semantic channel.",
+  "metrics": {
+    "psnr": 40.0,
+    "ssim": 1.0,
+    "object_match_accuracy": 1.0,
+    "relation_match_accuracy": 1.0,
+    "text_similarity": 1.0
+  },
+  "quality_label": "high"
+}

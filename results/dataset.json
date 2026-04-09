@@ -1,0 +1,18 @@
+[
+  {
+    "image_id": "file",
+    "objects": [],
+    "relations": [],
+    "semantic_text": "No recognizable objects were transmitted through the semantic channel.",
+    "bit_estimate": 384,
+    "quality_label": "high"
+  },
+  {
+    "image_id": "sample",
+    "objects": [],
+    "relations": [],
+    "semantic_text": "No recognizable objects were transmitted through the semantic channel.",
+    "bit_estimate": 384,
+    "quality_label": "high"
+  }
+]

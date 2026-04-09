@@ -1,0 +1,8 @@
+image_dir: data/images
+results_dir: results
+model_path: yolov8n.pt
+noise_level: 0.2
+max_objects: 20
+near_distance_threshold: 120.0
+conf_threshold: 0.25
+seed: 42
