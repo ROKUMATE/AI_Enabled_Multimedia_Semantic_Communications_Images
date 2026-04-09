@@ -3,16 +3,22 @@
     "image_id": "file",
     "objects": [],
     "relations": [],
-    "semantic_text": "No recognizable objects were transmitted through the semantic channel.",
-    "bit_estimate": 384,
+    "semantic_text": "The semantic channel preserved no recognizable objects, so the scene is only partially recoverable.",
+    "bit_estimate": 0,
+    "semantic_size_bytes": 0,
+    "compression_ratio": 0.0,
+    "semantic_score": 1.0,
     "quality_label": "high"
   },
   {
     "image_id": "sample",
     "objects": [],
     "relations": [],
-    "semantic_text": "No recognizable objects were transmitted through the semantic channel.",
-    "bit_estimate": 384,
+    "semantic_text": "The semantic channel preserved no recognizable objects, so the scene is only partially recoverable.",
+    "bit_estimate": 0,
+    "semantic_size_bytes": 0,
+    "compression_ratio": 0.0,
+    "semantic_score": 1.0,
     "quality_label": "high"
   }
 ]

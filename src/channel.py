@@ -2,13 +2,64 @@
 
 from __future__ import annotations
 
-import base64
-import json
 import random
-import zlib
+from copy import deepcopy
 from typing import Any
 
+from .semantic_codec import decode_oar_compact, encode_oar_compact
 from .types import EncodedPacket
+
+
+def apply_channel_noise(oar_data: dict[str, Any], drop_prob: float = 0.2, seed: int | None = None) -> dict[str, Any]:
+    """Apply reproducible semantic noise without mutating the original input."""
+    if not 0.0 <= drop_prob <= 1.0:
+        raise ValueError("drop_prob must be in [0.0, 1.0].")
+
+    rng = random.Random(seed)
+    data = deepcopy(oar_data) if isinstance(oar_data, dict) else {}
+    objects = list(data.get("objects", []))
+    relations = list(data.get("relations", []))
+    attributes = data.get("attributes", {}) if isinstance(data.get("attributes", {}), dict) else {}
+
+    kept_objects: list[dict[str, Any]] = [
+        obj for obj in objects if rng.random() > drop_prob and isinstance(obj, dict)
+    ]
+
+    if objects and not kept_objects:
+        fallback_objects = [obj for obj in objects if isinstance(obj, dict)]
+        if fallback_objects:
+            kept_objects = [rng.choice(fallback_objects)]
+
+    kept_ids = {
+        str(item.get("object_id"))
+        for item in kept_objects
+        if isinstance(item, dict) and item.get("object_id") is not None
+    }
+
+    kept_relations: list[dict[str, Any]] = []
+    for relation in relations:
+        if not isinstance(relation, dict):
+            continue
+
+        subject_id = str(relation.get("subject_id", ""))
+        object_id = str(relation.get("object_id", ""))
+        if subject_id not in kept_ids or object_id not in kept_ids:
+            continue
+        if rng.random() <= drop_prob:
+            continue
+        kept_relations.append(deepcopy(relation))
+
+    kept_attributes = {
+        key: deepcopy(value)
+        for key, value in attributes.items()
+        if key in kept_ids
+    }
+
+    return {
+        "objects": deepcopy(kept_objects),
+        "attributes": kept_attributes,
+        "relations": kept_relations,
+    }
 
 
 class NoisyChannel:
@@ -19,57 +70,22 @@ class NoisyChannel:
         if not 0.0 <= noise_level <= 1.0:
             raise ValueError("noise_level must be in [0.0, 1.0].")
         self.noise_level = noise_level
+        self.seed = seed
         self.random = random.Random(seed)
 
     def transmit(self, packet: EncodedPacket) -> EncodedPacket:
         """Apply random semantic corruption and return a new encoded packet."""
-        data = self._decode_payload(packet.payload)
+        data = decode_oar_compact(packet.payload)
         noisy = self._apply_noise(data)
-        return self._encode_payload(noisy)
+        encoded_data, bit_size = encode_oar_compact(noisy)
+        return EncodedPacket(
+            payload=encoded_data,
+            bit_estimate=bit_size,
+            encoding="semantic-token",
+            semantic_size_bytes=len(encoded_data.encode("utf-8")),
+        )
 
     def _apply_noise(self, data: dict[str, Any]) -> dict[str, Any]:
         """Drop objects and relations based on configured noise level."""
-        objects = data.get("objects", [])
-        kept_objects = [
-            obj for obj in objects if self.random.random() > self.noise_level
-        ]
-
-        if objects and not kept_objects:
-            kept_objects = [self.random.choice(objects)]
-
-        kept_ids = {item.get("object_id") for item in kept_objects}
-
-        relations = data.get("relations", [])
-        kept_relations = []
-        for rel in relations:
-            subject_id = rel.get("subject_id")
-            object_id = rel.get("object_id")
-            if subject_id not in kept_ids or object_id not in kept_ids:
-                continue
-            if self.random.random() <= self.noise_level:
-                continue
-            kept_relations.append(rel)
-
-        attributes = data.get("attributes", {})
-        kept_attributes = {
-            key: value for key, value in attributes.items() if key in kept_ids
-        }
-
-        return {
-            "objects": kept_objects,
-            "attributes": kept_attributes,
-            "relations": kept_relations,
-        }
-
-    def _decode_payload(self, payload: str) -> dict[str, Any]:
-        """Decode and decompress payload into dictionary form."""
-        compressed = base64.b64decode(payload.encode("utf-8"))
-        raw = zlib.decompress(compressed)
-        return json.loads(raw.decode("utf-8"))
-
-    def _encode_payload(self, data: dict[str, Any]) -> EncodedPacket:
-        """Compress dictionary into an encoded packet."""
-        raw_bytes = json.dumps(data, separators=(",", ":"), sort_keys=True).encode("utf-8")
-        compressed = zlib.compress(raw_bytes, level=9)
-        payload = base64.b64encode(compressed).decode("utf-8")
-        return EncodedPacket(payload=payload, bit_estimate=len(compressed) * 8)
+        noisy = apply_channel_noise(data, drop_prob=self.noise_level, seed=self.random.randint(0, 2**31 - 1))
+        return noisy

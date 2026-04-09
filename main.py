@@ -32,6 +32,7 @@ class PipelineConfig:
     near_distance_threshold: float
     conf_threshold: float
     seed: int | None
+    enable_privacy: bool
 
 
 DEFAULT_CONFIG: dict[str, Any] = {
@@ -43,6 +44,7 @@ DEFAULT_CONFIG: dict[str, Any] = {
     "near_distance_threshold": 120.0,
     "conf_threshold": 0.25,
     "seed": 42,
+    "enable_privacy": True,
 }
 
 
@@ -93,6 +95,11 @@ def parse_args() -> PipelineConfig:
         "--conf-threshold", type=float, default=float(config_defaults["conf_threshold"])
     )
     parser.add_argument("--seed", type=int, default=int(config_defaults["seed"]))
+    parser.add_argument(
+        "--enable-privacy",
+        action=argparse.BooleanOptionalAction,
+        default=bool(config_defaults["enable_privacy"]),
+    )
 
     args = parser.parse_args()
     return PipelineConfig(
@@ -104,6 +111,7 @@ def parse_args() -> PipelineConfig:
         near_distance_threshold=args.near_distance_threshold,
         conf_threshold=args.conf_threshold,
         seed=args.seed,
+        enable_privacy=args.enable_privacy,
     )
 
 
@@ -180,7 +188,9 @@ def run_pipeline(config: PipelineConfig) -> None:
             original_oar = builder.build(objects)
 
             encoded_packet = encoder.encode(original_oar)
-            transmitted_packet = channel.transmit(encoded_packet)
+            transmitted_packet = (
+                channel.transmit(encoded_packet) if config.enable_privacy else encoded_packet
+            )
             decoded_oar = decoder.decode(transmitted_packet)
 
             source_text = reconstructor.reconstruct_text(original_oar)
@@ -191,6 +201,9 @@ def run_pipeline(config: PipelineConfig) -> None:
                 decoded_oar=decoded_oar,
                 original_text=source_text,
                 reconstructed_text=reconstructed_text,
+                original_image_path=image_path,
+                semantic_size_bytes=transmitted_packet.semantic_size_bytes,
+                noise_level=config.noise_level,
             )
             quality_label = evaluator.label_quality(metrics)
 
@@ -203,6 +216,9 @@ def run_pipeline(config: PipelineConfig) -> None:
                 "semantic_text": reconstructed_text,
                 "metrics": metrics.to_dict(),
                 "quality_label": quality_label,
+                "original_image_size_kb": metrics.original_image_size_kb,
+                "semantic_size_bytes": metrics.semantic_size_bytes,
+                "compression_ratio": metrics.compression_ratio,
             }
             save_json(config.results_dir / "semantic" / f"{image_id}.json", semantic_output)
 
@@ -216,6 +232,9 @@ def run_pipeline(config: PipelineConfig) -> None:
                     "relations": [item.to_dict() for item in decoded_oar.relations],
                     "semantic_text": reconstructed_text,
                     "bit_estimate": transmitted_packet.bit_estimate,
+                    "semantic_size_bytes": transmitted_packet.semantic_size_bytes,
+                    "compression_ratio": metrics.compression_ratio,
+                    "semantic_score": metrics.semantic_score,
                     "quality_label": quality_label,
                 }
             )

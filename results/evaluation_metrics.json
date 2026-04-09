@@ -5,7 +5,12 @@
     "ssim": 1.0,
     "object_match_accuracy": 1.0,
     "relation_match_accuracy": 1.0,
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "semantic_score": 1.0,
+    "original_image_size_kb": 0.3505859375,
+    "semantic_size_bytes": 0,
+    "compression_ratio": 0.0,
+    "noise_level": 0.2
   },
   {
     "image_id": "sample",
@@ -13,6 +18,11 @@
     "ssim": 1.0,
     "object_match_accuracy": 1.0,
     "relation_match_accuracy": 1.0,
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "semantic_score": 1.0,
+    "original_image_size_kb": 0.3505859375,
+    "semantic_size_bytes": 0,
+    "compression_ratio": 0.0,
+    "noise_level": 0.2
   }
 ]

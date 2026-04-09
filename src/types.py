@@ -107,7 +107,8 @@ class EncodedPacket:
 
     payload: str
     bit_estimate: int
-    encoding: str = "zlib+base64"
+    encoding: str = "semantic-token"
+    semantic_size_bytes: int = 0
 
     def to_dict(self) -> dict[str, Any]:
         """Convert encoded packet to dictionary."""
@@ -115,6 +116,7 @@ class EncodedPacket:
             "payload": self.payload,
             "bit_estimate": self.bit_estimate,
             "encoding": self.encoding,
+            "semantic_size_bytes": self.semantic_size_bytes,
         }
 
 
@@ -127,6 +129,11 @@ class EvaluationMetrics:
     object_match_accuracy: float
     relation_match_accuracy: float
     text_similarity: float
+    semantic_score: float = 0.0
+    original_image_size_kb: float = 0.0
+    semantic_size_bytes: int = 0
+    compression_ratio: float = 0.0
+    noise_level: float = 0.0
 
     def to_dict(self) -> dict[str, float]:
         """Convert metrics to dictionary format."""
@@ -136,4 +143,9 @@ class EvaluationMetrics:
             "object_match_accuracy": self.object_match_accuracy,
             "relation_match_accuracy": self.relation_match_accuracy,
             "text_similarity": self.text_similarity,
+            "semantic_score": self.semantic_score,
+            "original_image_size_kb": self.original_image_size_kb,
+            "semantic_size_bytes": self.semantic_size_bytes,
+            "compression_ratio": self.compression_ratio,
+            "noise_level": self.noise_level,
         }

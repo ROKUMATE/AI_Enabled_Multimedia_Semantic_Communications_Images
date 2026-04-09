@@ -1,0 +1,59 @@
+{
+  "noise_levels": [
+    0.0,
+    0.5
+  ],
+  "summary_by_noise": [
+    {
+      "noise_level": 0.0,
+      "mean_object_accuracy": 1.0,
+      "mean_relation_accuracy": 1.0,
+      "mean_semantic_score": 1.0,
+      "mean_text_similarity": 1.0,
+      "mean_compression_ratio": 0.0,
+      "sample_count": 1
+    },
+    {
+      "noise_level": 0.5,
+      "mean_object_accuracy": 1.0,
+      "mean_relation_accuracy": 1.0,
+      "mean_semantic_score": 1.0,
+      "mean_text_similarity": 1.0,
+      "mean_compression_ratio": 0.0,
+      "sample_count": 1
+    }
+  ],
+  "rows": [
+    {
+      "image_id": "file",
+      "noise_level": 0.0,
+      "semantic_text": "The semantic channel preserved no recognizable objects, so the scene is only partially recoverable.",
+      "quality_label": "high",
+      "psnr": 40.0,
+      "ssim": 1.0,
+      "object_match_accuracy": 1.0,
+      "relation_match_accuracy": 1.0,
+      "text_similarity": 1.0,
+      "semantic_score": 1.0,
+      "original_image_size_kb": 0.3505859375,
+      "semantic_size_bytes": 0,
+      "compression_ratio": 0.0
+    },
+    {
+      "image_id": "file",
+      "noise_level": 0.5,
+      "semantic_text": "The semantic channel preserved no recognizable objects, so the scene is only partially recoverable.",
+      "quality_label": "high",
+      "psnr": 40.0,
+      "ssim": 1.0,
+      "object_match_accuracy": 1.0,
+      "relation_match_accuracy": 1.0,
+      "text_similarity": 1.0,
+      "semantic_score": 1.0,
+      "original_image_size_kb": 0.3505859375,
+      "semantic_size_bytes": 0,
+      "compression_ratio": 0.0
+    }
+  ],
+  "sample_count": 1
+}

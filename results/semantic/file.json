@@ -11,22 +11,32 @@
     "relations": []
   },
   "encoded_packet": {
-    "payload": "eNqrVkosKSnKTCotSS1Wsqqu1VHKT8pKTS4BcqJjdZSKUnMSSzLz88DcWgB6CRA1",
-    "bit_estimate": 384,
-    "encoding": "zlib+base64"
+    "payload": "",
+    "bit_estimate": 0,
+    "encoding": "semantic-token",
+    "semantic_size_bytes": 0
   },
   "transmitted_packet": {
-    "payload": "eNqrVkosKSnKTCotSS1Wsqqu1VHKT8pKTS4BcqJjdZSKUnMSSzLz88DcWgB6CRA1",
-    "bit_estimate": 384,
-    "encoding": "zlib+base64"
+    "payload": "",
+    "bit_estimate": 0,
+    "encoding": "semantic-token",
+    "semantic_size_bytes": 0
   },
-  "semantic_text": "No recognizable objects were transmitted through the semantic channel.",
+  "semantic_text": "The semantic channel preserved no recognizable objects, so the scene is only partially recoverable.",
   "metrics": {
     "psnr": 40.0,
     "ssim": 1.0,
     "object_match_accuracy": 1.0,
     "relation_match_accuracy": 1.0,
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "semantic_score": 1.0,
+    "original_image_size_kb": 0.3505859375,
+    "semantic_size_bytes": 0,
+    "compression_ratio": 0.0,
+    "noise_level": 0.2
   },
-  "quality_label": "high"
+  "quality_label": "high",
+  "original_image_size_kb": 0.3505859375,
+  "semantic_size_bytes": 0,
+  "compression_ratio": 0.0
 }

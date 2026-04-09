@@ -1,0 +1,3 @@
+compression_ratio,image_id,noise_level,object_match_accuracy,original_image_size_kb,psnr,quality_label,relation_match_accuracy,semantic_score,semantic_size_bytes,semantic_text,ssim,text_similarity
+0.0,file,0.0,1.0,0.3505859375,40.0,high,1.0,1.0,0,"The semantic channel preserved no recognizable objects, so the scene is only partially recoverable.",1.0,1.0
+0.0,file,0.5,1.0,0.3505859375,40.0,high,1.0,1.0,0,"The semantic channel preserved no recognizable objects, so the scene is only partially recoverable.",1.0,1.0
