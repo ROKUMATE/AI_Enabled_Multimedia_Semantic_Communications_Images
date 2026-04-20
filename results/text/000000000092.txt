@@ -1,0 +1,1 @@
+The scene appears multi-object and moderately structured. This reconstructed scene appears to contain 3 objects: fork (obj_0), cake (obj_1), dining table (obj_2). Observed relations include cake is near dining table; dining table is near cake.

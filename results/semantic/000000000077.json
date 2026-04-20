@@ -1,0 +1,408 @@
+{
+  "image_id": "000000000077",
+  "original_oar": {
+    "objects": [
+      {
+        "object_id": "obj_0",
+        "name": "person",
+        "bbox": [
+          24.063982009887695,
+          165.45523071289062,
+          123.91107177734375,
+          337.1862487792969
+        ],
+        "confidence": 0.8863498568534851
+      },
+      {
+        "object_id": "obj_1",
+        "name": "person",
+        "bbox": [
+          320.1903076171875,
+          54.78221893310547,
+          418.3741149902344,
+          149.5487060546875
+        ],
+        "confidence": 0.8817025423049927
+      },
+      {
+        "object_id": "obj_2",
+        "name": "person",
+        "bbox": [
+          215.18565368652344,
+          54.705360412597656,
+          319.3595886230469,
+          179.50917053222656
+        ],
+        "confidence": 0.8633978962898254
+      },
+      {
+        "object_id": "obj_3",
+        "name": "person",
+        "bbox": [
+          286.16949462890625,
+          101.96881866455078,
+          308.80718994140625,
+          141.13316345214844
+        ],
+        "confidence": 0.5632426142692566
+      },
+      {
+        "object_id": "obj_4",
+        "name": "skateboard",
+        "bbox": [
+          44.20321273803711,
+          317.6239929199219,
+          94.31574249267578,
+          344.9032897949219
+        ],
+        "confidence": 0.40642818808555603
+      },
+      {
+        "object_id": "obj_5",
+        "name": "person",
+        "bbox": [
+          269.53240966796875,
+          58.1474723815918,
+          318.65301513671875,
+          141.9056396484375
+        ],
+        "confidence": 0.3187994956970215
+      },
+      {
+        "object_id": "obj_6",
+        "name": "skateboard",
+        "bbox": [
+          44.353973388671875,
+          325.45513916015625,
+          78.46776580810547,
+          343.5162048339844
+        ],
+        "confidence": 0.2838576138019562
+      }
+    ],
+    "attributes": {
+      "obj_0": {},
+      "obj_1": {},
+      "obj_2": {},
+      "obj_3": {},
+      "obj_4": {},
+      "obj_5": {},
+      "obj_6": {}
+    },
+    "relations": [
+      {
+        "subject_id": "obj_0",
+        "predicate": "near",
+        "object_id": "obj_4"
+      },
+      {
+        "subject_id": "obj_4",
+        "predicate": "near",
+        "object_id": "obj_0"
+      },
+      {
+        "subject_id": "obj_0",
+        "predicate": "interacting_with",
+        "object_id": "obj_4"
+      },
+      {
+        "subject_id": "obj_0",
+        "predicate": "near",
+        "object_id": "obj_6"
+      },
+      {
+        "subject_id": "obj_6",
+        "predicate": "near",
+        "object_id": "obj_0"
+      },
+      {
+        "subject_id": "obj_0",
+        "predicate": "interacting_with",
+        "object_id": "obj_6"
+      },
+      {
+        "subject_id": "obj_1",
+        "predicate": "near",
+        "object_id": "obj_2"
+      },
+      {
+        "subject_id": "obj_2",
+        "predicate": "near",
+        "object_id": "obj_1"
+      },
+      {
+        "subject_id": "obj_1",
+        "predicate": "near",
+        "object_id": "obj_3"
+      },
+      {
+        "subject_id": "obj_3",
+        "predicate": "near",
+        "object_id": "obj_1"
+      },
+      {
+        "subject_id": "obj_1",
+        "predicate": "near",
+        "object_id": "obj_5"
+      },
+      {
+        "subject_id": "obj_5",
+        "predicate": "near",
+        "object_id": "obj_1"
+      },
+      {
+        "subject_id": "obj_2",
+        "predicate": "near",
+        "object_id": "obj_3"
+      },
+      {
+        "subject_id": "obj_3",
+        "predicate": "near",
+        "object_id": "obj_2"
+      },
+      {
+        "subject_id": "obj_2",
+        "predicate": "near",
+        "object_id": "obj_5"
+      },
+      {
+        "subject_id": "obj_5",
+        "predicate": "near",
+        "object_id": "obj_2"
+      },
+      {
+        "subject_id": "obj_3",
+        "predicate": "near",
+        "object_id": "obj_5"
+      },
+      {
+        "subject_id": "obj_5",
+        "predicate": "near",
+        "object_id": "obj_3"
+      },
+      {
+        "subject_id": "obj_4",
+        "predicate": "near",
+        "object_id": "obj_6"
+      },
+      {
+        "subject_id": "obj_6",
+        "predicate": "near",
+        "object_id": "obj_4"
+      }
+    ]
+  },
+  "decoded_oar": {
+    "objects": [
+      {
+        "object_id": "obj_0",
+        "name": "person",
+        "bbox": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "confidence": 0.0
+      },
+      {
+        "object_id": "obj_1",
+        "name": "person",
+        "bbox": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "confidence": 0.0
+      },
+      {
+        "object_id": "obj_2",
+        "name": "person",
+        "bbox": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "confidence": 0.0
+      },
+      {
+        "object_id": "obj_3",
+        "name": "person",
+        "bbox": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "confidence": 0.0
+      },
+      {
+        "object_id": "obj_4",
+        "name": "skateboard",
+        "bbox": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "confidence": 0.0
+      },
+      {
+        "object_id": "obj_5",
+        "name": "person",
+        "bbox": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "confidence": 0.0
+      },
+      {
+        "object_id": "obj_6",
+        "name": "skateboard",
+        "bbox": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "confidence": 0.0
+      }
+    ],
+    "attributes": {},
+    "relations": [
+      {
+        "subject_id": "obj_0",
+        "predicate": "near",
+        "object_id": "obj_4"
+      },
+      {
+        "subject_id": "obj_4",
+        "predicate": "near",
+        "object_id": "obj_0"
+      },
+      {
+        "subject_id": "obj_0",
+        "predicate": "interacting_with",
+        "object_id": "obj_4"
+      },
+      {
+        "subject_id": "obj_0",
+        "predicate": "near",
+        "object_id": "obj_6"
+      },
+      {
+        "subject_id": "obj_6",
+        "predicate": "near",
+        "object_id": "obj_0"
+      },
+      {
+        "subject_id": "obj_0",
+        "predicate": "interacting_with",
+        "object_id": "obj_6"
+      },
+      {
+        "subject_id": "obj_1",
+        "predicate": "near",
+        "object_id": "obj_2"
+      },
+      {
+        "subject_id": "obj_2",
+        "predicate": "near",
+        "object_id": "obj_1"
+      },
+      {
+        "subject_id": "obj_1",
+        "predicate": "near",
+        "object_id": "obj_3"
+      },
+      {
+        "subject_id": "obj_3",
+        "predicate": "near",
+        "object_id": "obj_1"
+      },
+      {
+        "subject_id": "obj_1",
+        "predicate": "near",
+        "object_id": "obj_5"
+      },
+      {
+        "subject_id": "obj_5",
+        "predicate": "near",
+        "object_id": "obj_1"
+      },
+      {
+        "subject_id": "obj_2",
+        "predicate": "near",
+        "object_id": "obj_3"
+      },
+      {
+        "subject_id": "obj_3",
+        "predicate": "near",
+        "object_id": "obj_2"
+      },
+      {
+        "subject_id": "obj_2",
+        "predicate": "near",
+        "object_id": "obj_5"
+      },
+      {
+        "subject_id": "obj_5",
+        "predicate": "near",
+        "object_id": "obj_2"
+      },
+      {
+        "subject_id": "obj_3",
+        "predicate": "near",
+        "object_id": "obj_5"
+      },
+      {
+        "subject_id": "obj_5",
+        "predicate": "near",
+        "object_id": "obj_3"
+      },
+      {
+        "subject_id": "obj_4",
+        "predicate": "near",
+        "object_id": "obj_6"
+      },
+      {
+        "subject_id": "obj_6",
+        "predicate": "near",
+        "object_id": "obj_4"
+      }
+    ]
+  },
+  "encoded_packet": {
+    "payload": "obj_0=person|obj_1=person|obj_2=person|obj_3=person|obj_4=skateboard|obj_5=person|obj_6=skateboard|obj_0-near-obj_4|obj_4-near-obj_0|obj_0-interacting_with-obj_4|obj_0-near-obj_6|obj_6-near-obj_0|obj_0-interacting_with-obj_6|obj_1-near-obj_2|obj_2-near-obj_1|obj_1-near-obj_3|obj_3-near-obj_1|obj_1-near-obj_5|obj_5-near-obj_1|obj_2-near-obj_3|obj_3-near-obj_2|obj_2-near-obj_5|obj_5-near-obj_2|obj_3-near-obj_5|obj_5-near-obj_3|obj_4-near-obj_6|obj_6-near-obj_4",
+    "bit_estimate": 3696,
+    "encoding": "semantic-token",
+    "semantic_size_bytes": 462
+  },
+  "transmitted_packet": {
+    "payload": "obj_0=person|obj_1=person|obj_2=person|obj_3=person|obj_4=skateboard|obj_5=person|obj_6=skateboard|obj_0-near-obj_4|obj_4-near-obj_0|obj_0-interacting_with-obj_4|obj_0-near-obj_6|obj_6-near-obj_0|obj_0-interacting_with-obj_6|obj_1-near-obj_2|obj_2-near-obj_1|obj_1-near-obj_3|obj_3-near-obj_1|obj_1-near-obj_5|obj_5-near-obj_1|obj_2-near-obj_3|obj_3-near-obj_2|obj_2-near-obj_5|obj_5-near-obj_2|obj_3-near-obj_5|obj_5-near-obj_3|obj_4-near-obj_6|obj_6-near-obj_4",
+    "bit_estimate": 3696,
+    "encoding": "semantic-token",
+    "semantic_size_bytes": 462
+  },
+  "semantic_text": "The scene likely centers on people or human activity. This reconstructed scene appears to contain 7 objects: person (obj_0), person (obj_1), person (obj_2), person (obj_3), skateboard (obj_4), person (obj_5), skateboard (obj_6). Observed relations include person is near skateboard; skateboard is near person; person is interacting with skateboard; person is near skateboard; skateboard is near person; person is interacting with skateboard; person is near person; person is near person; person is near person; person is near person; person is near person; person is near person; person is near person; person is near person; person is near person; person is near person; person is near person; person is near person; skateboard is near skateboard; skateboard is near skateboard.",
+  "metrics": {
+    "psnr": 40.0,
+    "ssim": 1.0,
+    "object_match_accuracy": 1.0,
+    "relation_match_accuracy": 1.0,
+    "text_similarity": 1.0,
+    "semantic_score": 1.0,
+    "original_image_size_kb": 155.4814453125,
+    "semantic_size_bytes": 462,
+    "compression_ratio": 344.6168831168831,
+    "noise_level": 0.2
+  },
+  "quality_label": "high",
+  "original_image_size_kb": 155.4814453125,
+  "semantic_size_bytes": 462,
+  "compression_ratio": 344.6168831168831
+}

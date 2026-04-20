@@ -1,5 +1,486 @@
 [
   {
+    "image_id": "000000000025",
+    "objects": [
+      {
+        "object_id": "obj_0",
+        "name": "giraffe",
+        "bbox": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "confidence": 0.0
+      },
+      {
+        "object_id": "obj_1",
+        "name": "giraffe",
+        "bbox": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "confidence": 0.0
+      }
+    ],
+    "relations": [],
+    "semantic_text": "The scene appears simple or partially observed. This reconstructed scene appears to contain 2 objects: giraffe (obj_0), giraffe (obj_1). No explicit relations survived channel corruption, so spatial and interaction structure is limited.",
+    "bit_estimate": 216,
+    "semantic_size_bytes": 27,
+    "compression_ratio": 7272.962962962963,
+    "semantic_score": 1.0,
+    "quality_label": "high"
+  },
+  {
+    "image_id": "000000000064",
+    "objects": [
+      {
+        "object_id": "obj_0",
+        "name": "car",
+        "bbox": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "confidence": 0.0
+      },
+      {
+        "object_id": "obj_1",
+        "name": "clock",
+        "bbox": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "confidence": 0.0
+      },
+      {
+        "object_id": "obj_2",
+        "name": "car",
+        "bbox": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "confidence": 0.0
+      }
+    ],
+    "relations": [
+      {
+        "subject_id": "obj_0",
+        "predicate": "near",
+        "object_id": "obj_2"
+      },
+      {
+        "subject_id": "obj_2",
+        "predicate": "near",
+        "object_id": "obj_0"
+      }
+    ],
+    "semantic_text": "The scene likely involves mobility or transport activity. This reconstructed scene appears to contain 3 objects: car (obj_0), clock (obj_1), car (obj_2). Observed relations include car is near car; car is near car.",
+    "bit_estimate": 520,
+    "semantic_size_bytes": 65,
+    "compression_ratio": 3397.9846153846156,
+    "semantic_score": 1.0,
+    "quality_label": "high"
+  },
+  {
+    "image_id": "000000000073",
+    "objects": [
+      {
+        "object_id": "obj_0",
+        "name": "motorcycle",
+        "bbox": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "confidence": 0.0
+      }
+    ],
+    "relations": [],
+    "semantic_text": "The scene likely involves mobility or transport activity. This reconstructed scene appears to contain 1 objects: motorcycle (obj_0). No explicit relations survived channel corruption, so spatial and interaction structure is limited.",
+    "bit_estimate": 128,
+    "semantic_size_bytes": 16,
+    "compression_ratio": 23978.1875,
+    "semantic_score": 1.0,
+    "quality_label": "high"
+  },
+  {
+    "image_id": "000000000077",
+    "objects": [
+      {
+        "object_id": "obj_0",
+        "name": "person",
+        "bbox": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "confidence": 0.0
+      },
+      {
+        "object_id": "obj_1",
+        "name": "person",
+        "bbox": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "confidence": 0.0
+      },
+      {
+        "object_id": "obj_2",
+        "name": "person",
+        "bbox": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "confidence": 0.0
+      },
+      {
+        "object_id": "obj_3",
+        "name": "person",
+        "bbox": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "confidence": 0.0
+      },
+      {
+        "object_id": "obj_4",
+        "name": "skateboard",
+        "bbox": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "confidence": 0.0
+      },
+      {
+        "object_id": "obj_5",
+        "name": "person",
+        "bbox": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "confidence": 0.0
+      },
+      {
+        "object_id": "obj_6",
+        "name": "skateboard",
+        "bbox": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "confidence": 0.0
+      }
+    ],
+    "relations": [
+      {
+        "subject_id": "obj_0",
+        "predicate": "near",
+        "object_id": "obj_4"
+      },
+      {
+        "subject_id": "obj_4",
+        "predicate": "near",
+        "object_id": "obj_0"
+      },
+      {
+        "subject_id": "obj_0",
+        "predicate": "interacting_with",
+        "object_id": "obj_4"
+      },
+      {
+        "subject_id": "obj_0",
+        "predicate": "near",
+        "object_id": "obj_6"
+      },
+      {
+        "subject_id": "obj_6",
+        "predicate": "near",
+        "object_id": "obj_0"
+      },
+      {
+        "subject_id": "obj_0",
+        "predicate": "interacting_with",
+        "object_id": "obj_6"
+      },
+      {
+        "subject_id": "obj_1",
+        "predicate": "near",
+        "object_id": "obj_2"
+      },
+      {
+        "subject_id": "obj_2",
+        "predicate": "near",
+        "object_id": "obj_1"
+      },
+      {
+        "subject_id": "obj_1",
+        "predicate": "near",
+        "object_id": "obj_3"
+      },
+      {
+        "subject_id": "obj_3",
+        "predicate": "near",
+        "object_id": "obj_1"
+      },
+      {
+        "subject_id": "obj_1",
+        "predicate": "near",
+        "object_id": "obj_5"
+      },
+      {
+        "subject_id": "obj_5",
+        "predicate": "near",
+        "object_id": "obj_1"
+      },
+      {
+        "subject_id": "obj_2",
+        "predicate": "near",
+        "object_id": "obj_3"
+      },
+      {
+        "subject_id": "obj_3",
+        "predicate": "near",
+        "object_id": "obj_2"
+      },
+      {
+        "subject_id": "obj_2",
+        "predicate": "near",
+        "object_id": "obj_5"
+      },
+      {
+        "subject_id": "obj_5",
+        "predicate": "near",
+        "object_id": "obj_2"
+      },
+      {
+        "subject_id": "obj_3",
+        "predicate": "near",
+        "object_id": "obj_5"
+      },
+      {
+        "subject_id": "obj_5",
+        "predicate": "near",
+        "object_id": "obj_3"
+      },
+      {
+        "subject_id": "obj_4",
+        "predicate": "near",
+        "object_id": "obj_6"
+      },
+      {
+        "subject_id": "obj_6",
+        "predicate": "near",
+        "object_id": "obj_4"
+      }
+    ],
+    "semantic_text": "The scene likely centers on people or human activity. This reconstructed scene appears to contain 7 objects: person (obj_0), person (obj_1), person (obj_2), person (obj_3), skateboard (obj_4), person (obj_5), skateboard (obj_6). Observed relations include person is near skateboard; skateboard is near person; person is interacting with skateboard; person is near skateboard; skateboard is near person; person is interacting with skateboard; person is near person; person is near person; person is near person; person is near person; person is near person; person is near person; person is near person; person is near person; person is near person; person is near person; person is near person; person is near person; skateboard is near skateboard; skateboard is near skateboard.",
+    "bit_estimate": 3696,
+    "semantic_size_bytes": 462,
+    "compression_ratio": 344.6168831168831,
+    "semantic_score": 1.0,
+    "quality_label": "high"
+  },
+  {
+    "image_id": "000000000081",
+    "objects": [
+      {
+        "object_id": "obj_0",
+        "name": "airplane",
+        "bbox": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "confidence": 0.0
+      }
+    ],
+    "relations": [],
+    "semantic_text": "The scene appears simple or partially observed. This reconstructed scene appears to contain 1 objects: airplane (obj_0). No explicit relations survived channel corruption, so spatial and interaction structure is limited.",
+    "bit_estimate": 112,
+    "semantic_size_bytes": 14,
+    "compression_ratio": 8090.071428571428,
+    "semantic_score": 1.0,
+    "quality_label": "high"
+  },
+  {
+    "image_id": "000000000092",
+    "objects": [
+      {
+        "object_id": "obj_0",
+        "name": "fork",
+        "bbox": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "confidence": 0.0
+      },
+      {
+        "object_id": "obj_1",
+        "name": "cake",
+        "bbox": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "confidence": 0.0
+      },
+      {
+        "object_id": "obj_2",
+        "name": "dining table",
+        "bbox": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "confidence": 0.0
+      }
+    ],
+    "relations": [
+      {
+        "subject_id": "obj_1",
+        "predicate": "near",
+        "object_id": "obj_2"
+      },
+      {
+        "subject_id": "obj_2",
+        "predicate": "near",
+        "object_id": "obj_1"
+      }
+    ],
+    "semantic_text": "The scene appears multi-object and moderately structured. This reconstructed scene appears to contain 3 objects: fork (obj_0), cake (obj_1), dining table (obj_2). Observed relations include cake is near dining table; dining table is near cake.",
+    "bit_estimate": 592,
+    "semantic_size_bytes": 74,
+    "compression_ratio": 999.0,
+    "semantic_score": 1.0,
+    "quality_label": "high"
+  },
+  {
+    "image_id": "000000000143",
+    "objects": [
+      {
+        "object_id": "obj_0",
+        "name": "bird",
+        "bbox": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "confidence": 0.0
+      },
+      {
+        "object_id": "obj_1",
+        "name": "bird",
+        "bbox": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "confidence": 0.0
+      },
+      {
+        "object_id": "obj_2",
+        "name": "bird",
+        "bbox": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "confidence": 0.0
+      },
+      {
+        "object_id": "obj_3",
+        "name": "bird",
+        "bbox": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "confidence": 0.0
+      },
+      {
+        "object_id": "obj_4",
+        "name": "bird",
+        "bbox": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "confidence": 0.0
+      },
+      {
+        "object_id": "obj_5",
+        "name": "bird",
+        "bbox": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "confidence": 0.0
+      }
+    ],
+    "relations": [
+      {
+        "subject_id": "obj_2",
+        "predicate": "near",
+        "object_id": "obj_4"
+      },
+      {
+        "subject_id": "obj_4",
+        "predicate": "near",
+        "object_id": "obj_2"
+      },
+      {
+        "subject_id": "obj_4",
+        "predicate": "near",
+        "object_id": "obj_5"
+      },
+      {
+        "subject_id": "obj_5",
+        "predicate": "near",
+        "object_id": "obj_4"
+      }
+    ],
+    "semantic_text": "The scene appears multi-object and moderately structured. This reconstructed scene appears to contain 6 objects: bird (obj_0), bird (obj_1), bird (obj_2), bird (obj_3), bird (obj_4), bird (obj_5). Observed relations include bird is near bird; bird is near bird; bird is near bird; bird is near bird.",
+    "bit_estimate": 1064,
+    "semantic_size_bytes": 133,
+    "compression_ratio": 447.77443609022555,
+    "semantic_score": 1.0,
+    "quality_label": "high"
+  },
+  {
     "image_id": "IMG_8797",
     "objects": [
       {

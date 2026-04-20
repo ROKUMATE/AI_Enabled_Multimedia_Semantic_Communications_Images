@@ -1,0 +1,225 @@
+{
+  "image_id": "000000000143",
+  "original_oar": {
+    "objects": [
+      {
+        "object_id": "obj_0",
+        "name": "bird",
+        "bbox": [
+          129.0532684326172,
+          104.67990112304688,
+          222.8068389892578,
+          282.82183837890625
+        ],
+        "confidence": 0.8507360816001892
+      },
+      {
+        "object_id": "obj_1",
+        "name": "bird",
+        "bbox": [
+          422.70501708984375,
+          192.72227478027344,
+          563.0278930664062,
+          481.5469970703125
+        ],
+        "confidence": 0.8086344599723816
+      },
+      {
+        "object_id": "obj_2",
+        "name": "bird",
+        "bbox": [
+          241.53607177734375,
+          272.77569580078125,
+          346.5430603027344,
+          423.6168212890625
+        ],
+        "confidence": 0.6777381896972656
+      },
+      {
+        "object_id": "obj_3",
+        "name": "bird",
+        "bbox": [
+          29.354236602783203,
+          17.390670776367188,
+          133.34750366210938,
+          164.54107666015625
+        ],
+        "confidence": 0.623121976852417
+      },
+      {
+        "object_id": "obj_4",
+        "name": "bird",
+        "bbox": [
+          267.3544006347656,
+          129.48519897460938,
+          389.46124267578125,
+          373.8710632324219
+        ],
+        "confidence": 0.5463165640830994
+      },
+      {
+        "object_id": "obj_5",
+        "name": "bird",
+        "bbox": [
+          267.5338439941406,
+          130.0252227783203,
+          361.240478515625,
+          281.42779541015625
+        ],
+        "confidence": 0.2703886330127716
+      }
+    ],
+    "attributes": {
+      "obj_0": {},
+      "obj_1": {},
+      "obj_2": {},
+      "obj_3": {},
+      "obj_4": {},
+      "obj_5": {}
+    },
+    "relations": [
+      {
+        "subject_id": "obj_2",
+        "predicate": "near",
+        "object_id": "obj_4"
+      },
+      {
+        "subject_id": "obj_4",
+        "predicate": "near",
+        "object_id": "obj_2"
+      },
+      {
+        "subject_id": "obj_4",
+        "predicate": "near",
+        "object_id": "obj_5"
+      },
+      {
+        "subject_id": "obj_5",
+        "predicate": "near",
+        "object_id": "obj_4"
+      }
+    ]
+  },
+  "decoded_oar": {
+    "objects": [
+      {
+        "object_id": "obj_0",
+        "name": "bird",
+        "bbox": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "confidence": 0.0
+      },
+      {
+        "object_id": "obj_1",
+        "name": "bird",
+        "bbox": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "confidence": 0.0
+      },
+      {
+        "object_id": "obj_2",
+        "name": "bird",
+        "bbox": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "confidence": 0.0
+      },
+      {
+        "object_id": "obj_3",
+        "name": "bird",
+        "bbox": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "confidence": 0.0
+      },
+      {
+        "object_id": "obj_4",
+        "name": "bird",
+        "bbox": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "confidence": 0.0
+      },
+      {
+        "object_id": "obj_5",
+        "name": "bird",
+        "bbox": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "confidence": 0.0
+      }
+    ],
+    "attributes": {},
+    "relations": [
+      {
+        "subject_id": "obj_2",
+        "predicate": "near",
+        "object_id": "obj_4"
+      },
+      {
+        "subject_id": "obj_4",
+        "predicate": "near",
+        "object_id": "obj_2"
+      },
+      {
+        "subject_id": "obj_4",
+        "predicate": "near",
+        "object_id": "obj_5"
+      },
+      {
+        "subject_id": "obj_5",
+        "predicate": "near",
+        "object_id": "obj_4"
+      }
+    ]
+  },
+  "encoded_packet": {
+    "payload": "obj_0=bird|obj_1=bird|obj_2=bird|obj_3=bird|obj_4=bird|obj_5=bird|obj_2-near-obj_4|obj_4-near-obj_2|obj_4-near-obj_5|obj_5-near-obj_4",
+    "bit_estimate": 1064,
+    "encoding": "semantic-token",
+    "semantic_size_bytes": 133
+  },
+  "transmitted_packet": {
+    "payload": "obj_0=bird|obj_1=bird|obj_2=bird|obj_3=bird|obj_4=bird|obj_5=bird|obj_2-near-obj_4|obj_4-near-obj_2|obj_4-near-obj_5|obj_5-near-obj_4",
+    "bit_estimate": 1064,
+    "encoding": "semantic-token",
+    "semantic_size_bytes": 133
+  },
+  "semantic_text": "The scene appears multi-object and moderately structured. This reconstructed scene appears to contain 6 objects: bird (obj_0), bird (obj_1), bird (obj_2), bird (obj_3), bird (obj_4), bird (obj_5). Observed relations include bird is near bird; bird is near bird; bird is near bird; bird is near bird.",
+  "metrics": {
+    "psnr": 40.0,
+    "ssim": 1.0,
+    "object_match_accuracy": 1.0,
+    "relation_match_accuracy": 1.0,
+    "text_similarity": 1.0,
+    "semantic_score": 1.0,
+    "original_image_size_kb": 58.158203125,
+    "semantic_size_bytes": 133,
+    "compression_ratio": 447.77443609022555,
+    "noise_level": 0.2
+  },
+  "quality_label": "high",
+  "original_image_size_kb": 58.158203125,
+  "semantic_size_bytes": 133,
+  "compression_ratio": 447.77443609022555
+}

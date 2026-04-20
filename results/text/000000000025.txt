@@ -1,0 +1,1 @@
+The scene appears simple or partially observed. This reconstructed scene appears to contain 2 objects: giraffe (obj_0), giraffe (obj_1). No explicit relations survived channel corruption, so spatial and interaction structure is limited.

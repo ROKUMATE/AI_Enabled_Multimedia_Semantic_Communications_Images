@@ -1,0 +1,136 @@
+{
+  "image_id": "000000000064",
+  "original_oar": {
+    "objects": [
+      {
+        "object_id": "obj_0",
+        "name": "car",
+        "bbox": [
+          51.36485290527344,
+          391.3814697265625,
+          227.6052703857422,
+          525.4698486328125
+        ],
+        "confidence": 0.7956721782684326
+      },
+      {
+        "object_id": "obj_1",
+        "name": "clock",
+        "bbox": [
+          109.7974853515625,
+          36.36262512207031,
+          261.2078552246094,
+          194.70425415039062
+        ],
+        "confidence": 0.7547013163566589
+      },
+      {
+        "object_id": "obj_2",
+        "name": "car",
+        "bbox": [
+          52.44875717163086,
+          355.0816650390625,
+          179.93682861328125,
+          413.8582763671875
+        ],
+        "confidence": 0.27069225907325745
+      }
+    ],
+    "attributes": {
+      "obj_0": {},
+      "obj_1": {},
+      "obj_2": {}
+    },
+    "relations": [
+      {
+        "subject_id": "obj_0",
+        "predicate": "near",
+        "object_id": "obj_2"
+      },
+      {
+        "subject_id": "obj_2",
+        "predicate": "near",
+        "object_id": "obj_0"
+      }
+    ]
+  },
+  "decoded_oar": {
+    "objects": [
+      {
+        "object_id": "obj_0",
+        "name": "car",
+        "bbox": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "confidence": 0.0
+      },
+      {
+        "object_id": "obj_1",
+        "name": "clock",
+        "bbox": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "confidence": 0.0
+      },
+      {
+        "object_id": "obj_2",
+        "name": "car",
+        "bbox": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "confidence": 0.0
+      }
+    ],
+    "attributes": {},
+    "relations": [
+      {
+        "subject_id": "obj_0",
+        "predicate": "near",
+        "object_id": "obj_2"
+      },
+      {
+        "subject_id": "obj_2",
+        "predicate": "near",
+        "object_id": "obj_0"
+      }
+    ]
+  },
+  "encoded_packet": {
+    "payload": "obj_0=car|obj_1=clock|obj_2=car|obj_0-near-obj_2|obj_2-near-obj_0",
+    "bit_estimate": 520,
+    "encoding": "semantic-token",
+    "semantic_size_bytes": 65
+  },
+  "transmitted_packet": {
+    "payload": "obj_0=car|obj_1=clock|obj_2=car|obj_0-near-obj_2|obj_2-near-obj_0",
+    "bit_estimate": 520,
+    "encoding": "semantic-token",
+    "semantic_size_bytes": 65
+  },
+  "semantic_text": "The scene likely involves mobility or transport activity. This reconstructed scene appears to contain 3 objects: car (obj_0), clock (obj_1), car (obj_2). Observed relations include car is near car; car is near car.",
+  "metrics": {
+    "psnr": 40.0,
+    "ssim": 1.0,
+    "object_match_accuracy": 1.0,
+    "relation_match_accuracy": 1.0,
+    "text_similarity": 1.0,
+    "semantic_score": 1.0,
+    "original_image_size_kb": 215.6923828125,
+    "semantic_size_bytes": 65,
+    "compression_ratio": 3397.9846153846156,
+    "noise_level": 0.2
+  },
+  "quality_label": "high",
+  "original_image_size_kb": 215.6923828125,
+  "semantic_size_bytes": 65,
+  "compression_ratio": 3397.9846153846156
+}

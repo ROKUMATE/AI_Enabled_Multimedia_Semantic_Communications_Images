@@ -1,0 +1,68 @@
+{
+  "image_id": "000000000081",
+  "original_oar": {
+    "objects": [
+      {
+        "object_id": "obj_0",
+        "name": "airplane",
+        "bbox": [
+          26.11529541015625,
+          31.910980224609375,
+          629.0382690429688,
+          354.22442626953125
+        ],
+        "confidence": 0.8934925198554993
+      }
+    ],
+    "attributes": {
+      "obj_0": {}
+    },
+    "relations": []
+  },
+  "decoded_oar": {
+    "objects": [
+      {
+        "object_id": "obj_0",
+        "name": "airplane",
+        "bbox": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "confidence": 0.0
+      }
+    ],
+    "attributes": {},
+    "relations": []
+  },
+  "encoded_packet": {
+    "payload": "obj_0=airplane",
+    "bit_estimate": 112,
+    "encoding": "semantic-token",
+    "semantic_size_bytes": 14
+  },
+  "transmitted_packet": {
+    "payload": "obj_0=airplane",
+    "bit_estimate": 112,
+    "encoding": "semantic-token",
+    "semantic_size_bytes": 14
+  },
+  "semantic_text": "The scene appears simple or partially observed. This reconstructed scene appears to contain 1 objects: airplane (obj_0). No explicit relations survived channel corruption, so spatial and interaction structure is limited.",
+  "metrics": {
+    "psnr": 40.0,
+    "ssim": 1.0,
+    "object_match_accuracy": 1.0,
+    "relation_match_accuracy": 1.0,
+    "text_similarity": 1.0,
+    "semantic_score": 1.0,
+    "original_image_size_kb": 110.6064453125,
+    "semantic_size_bytes": 14,
+    "compression_ratio": 8090.071428571428,
+    "noise_level": 0.2
+  },
+  "quality_label": "high",
+  "original_image_size_kb": 110.6064453125,
+  "semantic_size_bytes": 14,
+  "compression_ratio": 8090.071428571428
+}

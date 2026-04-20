@@ -1,0 +1,1 @@
+The scene likely involves mobility or transport activity. This reconstructed scene appears to contain 3 objects: car (obj_0), clock (obj_1), car (obj_2). Observed relations include car is near car; car is near car.

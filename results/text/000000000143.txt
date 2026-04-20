@@ -1,0 +1,1 @@
+The scene appears multi-object and moderately structured. This reconstructed scene appears to contain 6 objects: bird (obj_0), bird (obj_1), bird (obj_2), bird (obj_3), bird (obj_4), bird (obj_5). Observed relations include bird is near bird; bird is near bird; bird is near bird; bird is near bird.

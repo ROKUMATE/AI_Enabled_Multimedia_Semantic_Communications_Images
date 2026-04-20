@@ -1,0 +1,1 @@
+The scene appears simple or partially observed. This reconstructed scene appears to contain 1 objects: airplane (obj_0). No explicit relations survived channel corruption, so spatial and interaction structure is limited.
