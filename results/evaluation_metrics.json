@@ -1,5 +1,18 @@
 [
   {
+    "image_id": "IMG_8797",
+    "psnr": 40.0,
+    "ssim": 1.0,
+    "object_match_accuracy": 1.0,
+    "relation_match_accuracy": 1.0,
+    "text_similarity": 1.0,
+    "semantic_score": 1.0,
+    "original_image_size_kb": 3290.330078125,
+    "semantic_size_bytes": 29,
+    "compression_ratio": 116182.68965517242,
+    "noise_level": 0.2
+  },
+  {
     "image_id": "file",
     "psnr": 40.0,
     "ssim": 1.0,

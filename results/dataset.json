@@ -1,5 +1,39 @@
 [
   {
+    "image_id": "IMG_8797",
+    "objects": [
+      {
+        "object_id": "obj_0",
+        "name": "potted plant",
+        "bbox": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "confidence": 0.0
+      },
+      {
+        "object_id": "obj_1",
+        "name": "vase",
+        "bbox": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "confidence": 0.0
+      }
+    ],
+    "relations": [],
+    "semantic_text": "The scene appears simple or partially observed. This reconstructed scene appears to contain 2 objects: potted plant (obj_0), vase (obj_1). No explicit relations survived channel corruption, so spatial and interaction structure is limited.",
+    "bit_estimate": 232,
+    "semantic_size_bytes": 29,
+    "compression_ratio": 116182.68965517242,
+    "semantic_score": 1.0,
+    "quality_label": "high"
+  },
+  {
     "image_id": "file",
     "objects": [],
     "relations": [],
