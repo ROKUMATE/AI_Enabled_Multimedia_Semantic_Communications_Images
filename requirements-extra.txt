@@ -1,0 +1,28 @@
+# Optional / heavy dependencies for the full feature set, training, and GPU work.
+# The core CPU pipeline (requirements.txt) runs WITHOUT any of these; install the
+# group(s) you need on a machine with a compatible Python (3.10-3.12 recommended;
+# several of these have no wheels for very new Python versions). See docs/SETUP.md.
+#
+#   pip install -r requirements-extra.txt
+# or install a single group by uncommenting only what you need.
+
+# --- OCR (text-region detection -> preserve mode; OCR legibility metric) ---
+# Install ONE backend. easyocr is pure-pip; pytesseract also needs the system
+# `tesseract` binary (e.g. `brew install tesseract` / `apt-get install tesseract-ocr`).
+easyocr>=1.7.0
+# pytesseract>=0.3.10
+
+# --- Perceptual metric (metrics.lpips: true) ---
+lpips>=0.1.4
+
+# --- Diffusion background reconstruction (reconstructor: diffusion; needs GPU) ---
+# On the GPU machine, install a CUDA build of torch FIRST, e.g.:
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
+diffusers>=0.27.0
+transformers>=4.40.0
+accelerate>=0.29.0
+
+# --- Results analysis notebook (notebooks/experiment_results.ipynb) ---
+pandas>=2.2.0
+seaborn>=0.13.0
+jupyter>=1.0.0

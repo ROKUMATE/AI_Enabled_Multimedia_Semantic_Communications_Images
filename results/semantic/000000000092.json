@@ -1,6 +1,10 @@
 {
   "image_id": "000000000092",
-  "original_oar": {
+  "scene_graph": {
+    "image_size": [
+      640,
+      427
+    ],
     "objects": [
       {
         "object_id": "obj_0",
@@ -11,7 +15,11 @@
           586.0810546875,
           422.6107177734375
         ],
-        "confidence": 0.9272827506065369
+        "confidence": 0.9272827506065369,
+        "mode": "regenerate",
+        "importance": 0.08653880822594542,
+        "selected": true,
+        "ocr_text": null
       },
       {
         "object_id": "obj_1",
@@ -22,7 +30,11 @@
           489.799560546875,
           296.57708740234375
         ],
-        "confidence": 0.9098381996154785
+        "confidence": 0.9098381996154785,
+        "mode": "regenerate",
+        "importance": 0.29112012698195944,
+        "selected": true,
+        "ocr_text": null
       },
       {
         "object_id": "obj_2",
@@ -33,104 +45,91 @@
           586.7523803710938,
           422.54498291015625
         ],
-        "confidence": 0.43795210123062134
+        "confidence": 0.43795210123062134,
+        "mode": "regenerate",
+        "importance": 0.3675280956070193,
+        "selected": true,
+        "ocr_text": null
       }
     ],
-    "attributes": {
-      "obj_0": {},
-      "obj_1": {},
-      "obj_2": {}
+    "relations": [
+      {
+        "subject_id": "obj_1",
+        "predicate": "near",
+        "object_id": "obj_2"
+      },
+      {
+        "subject_id": "obj_2",
+        "predicate": "near",
+        "object_id": "obj_1"
+      }
+    ]
+  },
+  "size_report": {
+    "structure_bytes": 879,
+    "appearance_bytes": 29577,
+    "crops_raw_bytes": 29540,
+    "num_crops": 3,
+    "total_bytes": 30467
+  },
+  "objects": [
+    {
+      "object_id": "obj_0",
+      "name": "fork",
+      "bbox": [
+        418.9591064453125,
+        119.02862548828125,
+        586.0810546875,
+        422.6107177734375
+      ],
+      "confidence": 0.9272827506065369,
+      "mode": "regenerate",
+      "importance": 0.08653880822594542,
+      "selected": true,
+      "ocr_text": null
     },
-    "relations": [
-      {
-        "subject_id": "obj_1",
-        "predicate": "near",
-        "object_id": "obj_2"
-      },
-      {
-        "subject_id": "obj_2",
-        "predicate": "near",
-        "object_id": "obj_1"
-      }
-    ]
-  },
-  "decoded_oar": {
-    "objects": [
-      {
-        "object_id": "obj_0",
-        "name": "fork",
-        "bbox": [
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "confidence": 0.0
-      },
-      {
-        "object_id": "obj_1",
-        "name": "cake",
-        "bbox": [
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "confidence": 0.0
-      },
-      {
-        "object_id": "obj_2",
-        "name": "dining table",
-        "bbox": [
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "confidence": 0.0
-      }
-    ],
-    "attributes": {},
-    "relations": [
-      {
-        "subject_id": "obj_1",
-        "predicate": "near",
-        "object_id": "obj_2"
-      },
-      {
-        "subject_id": "obj_2",
-        "predicate": "near",
-        "object_id": "obj_1"
-      }
-    ]
-  },
-  "encoded_packet": {
-    "payload": "obj_0=fork|obj_1=cake|obj_2=dining table|obj_1-near-obj_2|obj_2-near-obj_1",
-    "bit_estimate": 592,
-    "encoding": "semantic-token",
-    "semantic_size_bytes": 74
-  },
-  "transmitted_packet": {
-    "payload": "obj_0=fork|obj_1=cake|obj_2=dining table|obj_1-near-obj_2|obj_2-near-obj_1",
-    "bit_estimate": 592,
-    "encoding": "semantic-token",
-    "semantic_size_bytes": 74
-  },
-  "semantic_text": "The scene appears multi-object and moderately structured. This reconstructed scene appears to contain 3 objects: fork (obj_0), cake (obj_1), dining table (obj_2). Observed relations include cake is near dining table; dining table is near cake.",
-  "metrics": {
-    "psnr": 40.0,
-    "ssim": 1.0,
-    "object_match_accuracy": 1.0,
-    "relation_match_accuracy": 1.0,
-    "text_similarity": 1.0,
-    "semantic_score": 1.0,
-    "original_image_size_kb": 72.193359375,
-    "semantic_size_bytes": 74,
-    "compression_ratio": 999.0,
-    "noise_level": 0.2
-  },
-  "quality_label": "high",
-  "original_image_size_kb": 72.193359375,
-  "semantic_size_bytes": 74,
-  "compression_ratio": 999.0
+    {
+      "object_id": "obj_1",
+      "name": "cake",
+      "bbox": [
+        134.1390380859375,
+        0.14788818359375,
+        489.799560546875,
+        296.57708740234375
+      ],
+      "confidence": 0.9098381996154785,
+      "mode": "regenerate",
+      "importance": 0.29112012698195944,
+      "selected": true,
+      "ocr_text": null
+    },
+    {
+      "object_id": "obj_2",
+      "name": "dining table",
+      "bbox": [
+        1.11749267578125,
+        2.4583740234375,
+        586.7523803710938,
+        422.54498291015625
+      ],
+      "confidence": 0.43795210123062134,
+      "mode": "regenerate",
+      "importance": 0.3675280956070193,
+      "selected": true,
+      "ocr_text": null
+    }
+  ],
+  "relations": [
+    {
+      "subject_id": "obj_1",
+      "predicate": "near",
+      "object_id": "obj_2"
+    },
+    {
+      "subject_id": "obj_2",
+      "predicate": "near",
+      "object_id": "obj_1"
+    }
+  ],
+  "text": "The scene appears multi-object and moderately structured. This reconstructed scene appears to contain 3 objects: fork (obj_0), cake (obj_1), dining table (obj_2). Observed relations include cake is near dining table; dining table is near cake."
 }

@@ -1,6 +1,10 @@
 {
   "image_id": "000000000073",
-  "original_oar": {
+  "scene_graph": {
+    "image_size": [
+      565,
+      640
+    ],
     "objects": [
       {
         "object_id": "obj_0",
@@ -11,58 +15,39 @@
           523.1406860351562,
           634.842041015625
         ],
-        "confidence": 0.8257248401641846
+        "confidence": 0.8257248401641846,
+        "mode": "regenerate",
+        "importance": 0.6802332068468809,
+        "selected": true,
+        "ocr_text": null
       }
     ],
-    "attributes": {
-      "obj_0": {}
-    },
     "relations": []
   },
-  "decoded_oar": {
-    "objects": [
-      {
-        "object_id": "obj_0",
-        "name": "motorcycle",
-        "bbox": [
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "confidence": 0.0
-      }
-    ],
-    "attributes": {},
-    "relations": []
+  "size_report": {
+    "structure_bytes": 287,
+    "appearance_bytes": 57639,
+    "crops_raw_bytes": 57624,
+    "num_crops": 1,
+    "total_bytes": 57937
   },
-  "encoded_packet": {
-    "payload": "obj_0=motorcycle",
-    "bit_estimate": 128,
-    "encoding": "semantic-token",
-    "semantic_size_bytes": 16
-  },
-  "transmitted_packet": {
-    "payload": "obj_0=motorcycle",
-    "bit_estimate": 128,
-    "encoding": "semantic-token",
-    "semantic_size_bytes": 16
-  },
-  "semantic_text": "The scene likely involves mobility or transport activity. This reconstructed scene appears to contain 1 objects: motorcycle (obj_0). No explicit relations survived channel corruption, so spatial and interaction structure is limited.",
-  "metrics": {
-    "psnr": 40.0,
-    "ssim": 1.0,
-    "object_match_accuracy": 1.0,
-    "relation_match_accuracy": 1.0,
-    "text_similarity": 1.0,
-    "semantic_score": 1.0,
-    "original_image_size_kb": 374.6591796875,
-    "semantic_size_bytes": 16,
-    "compression_ratio": 23978.1875,
-    "noise_level": 0.2
-  },
-  "quality_label": "high",
-  "original_image_size_kb": 374.6591796875,
-  "semantic_size_bytes": 16,
-  "compression_ratio": 23978.1875
+  "objects": [
+    {
+      "object_id": "obj_0",
+      "name": "motorcycle",
+      "bbox": [
+        4.65362548828125,
+        28.9642333984375,
+        523.1406860351562,
+        634.842041015625
+      ],
+      "confidence": 0.8257248401641846,
+      "mode": "regenerate",
+      "importance": 0.6802332068468809,
+      "selected": true,
+      "ocr_text": null
+    }
+  ],
+  "relations": [],
+  "text": "The scene likely involves mobility or transport activity. This reconstructed scene appears to contain 1 objects: motorcycle (obj_0). No explicit relations survived channel corruption, so spatial and interaction structure is limited."
 }

@@ -1,4 +1,9 @@
-"""Experiment runner for semantic robustness and compression analysis."""
+"""Experiment runner: folder of images x configs + baselines.
+
+Runs every image through the semantic pipeline and the JPEG-matched and
+text-only baselines, writes a results table (CSV + JSON), and saves side-by-side
+original/reconstructed comparison images under ``results/comparisons/``.
+"""
 
 from __future__ import annotations
 
@@ -8,93 +13,67 @@ import logging
 from pathlib import Path
 from typing import Any
 
-import matplotlib
+import numpy as np
+from PIL import Image, ImageDraw, ImageFont
 
-matplotlib.use("Agg")
-import matplotlib.pyplot as plt
-
-from main import PipelineConfig, iter_images, load_config_file, save_json
-from src.channel import NoisyChannel
-from src.decoder import OARDecoder
-from src.encoder import OAREncoder
-from src.evaluate import Evaluator
-from src.extract import ObjectExtractor
-from src.oar_builder import OARBuilder
-from src.reconstruct import SemanticReconstructor
+from main import iter_images, load_config_file, save_json, setup_logging
+from src.baselines import jpeg_baseline, text_only_payload
+from src.metrics import Metrics
+from src.pipeline import PipelineSettings, SemanticPipeline
 
 
-def setup_experiment_logging(results_dir: Path) -> Path:
-    """Configure experiment-specific logging."""
-    logs_dir = results_dir / "logs"
-    logs_dir.mkdir(parents=True, exist_ok=True)
-    log_path = logs_dir / "experiment.log"
-
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s | %(levelname)s | %(name)s | %(message)s",
-        handlers=[logging.FileHandler(log_path), logging.StreamHandler()],
-        force=True,
-    )
-    return log_path
+logger = logging.getLogger("semantic-experiment")
+_FONT = ImageFont.load_default()
 
 
-def parse_args() -> tuple[PipelineConfig, float, float, float, int | None]:
-    """Parse experiment CLI arguments."""
+def parse_args() -> argparse.Namespace:
+    """Parse experiment CLI arguments (keeps legacy flags accepted)."""
     pre_parser = argparse.ArgumentParser(add_help=False)
     pre_parser.add_argument("--config", type=Path, default=Path("config.yaml"))
     pre_args, _ = pre_parser.parse_known_args()
     config_defaults = load_config_file(pre_args.config)
 
-    parser = argparse.ArgumentParser(description="Semantic communication experiment runner")
+    parser = argparse.ArgumentParser(description="Semantic image communication experiment runner")
     parser.add_argument("--config", type=Path, default=pre_args.config)
     parser.add_argument("--image-dir", type=Path, default=Path(str(config_defaults["image_dir"])))
     parser.add_argument("--results-dir", type=Path, default=Path(str(config_defaults["results_dir"])))
-    parser.add_argument("--model-path", type=str, default=str(config_defaults["model_path"]))
-    parser.add_argument("--noise-level", type=float, default=float(config_defaults["noise_level"]))
-    parser.add_argument("--max-objects", type=int, default=int(config_defaults["max_objects"]))
-    parser.add_argument(
-        "--near-distance-threshold",
-        type=float,
-        default=float(config_defaults["near_distance_threshold"]),
-    )
-    parser.add_argument("--conf-threshold", type=float, default=float(config_defaults["conf_threshold"]))
-    parser.add_argument("--seed", type=int, default=int(config_defaults["seed"]))
-    parser.add_argument(
-        "--enable-privacy",
-        action=argparse.BooleanOptionalAction,
-        default=bool(config_defaults["enable_privacy"]),
-    )
-    parser.add_argument("--noise-start", type=float, default=0.0)
-    parser.add_argument("--noise-stop", type=float, default=0.5)
-    parser.add_argument("--noise-step", type=float, default=0.1)
     parser.add_argument("--max-images", type=int, default=None)
-
-    args = parser.parse_args()
-    config = PipelineConfig(
-        image_dir=args.image_dir,
-        results_dir=args.results_dir,
-        model_path=args.model_path,
-        noise_level=args.noise_level,
-        max_objects=args.max_objects,
-        near_distance_threshold=args.near_distance_threshold,
-        conf_threshold=args.conf_threshold,
-        seed=args.seed,
-        enable_privacy=args.enable_privacy,
+    parser.add_argument(
+        "--deep-features",
+        action=argparse.BooleanOptionalAction,
+        default=bool((config_defaults.get("metrics") or {}).get("deep_features", False)),
     )
-    return config, args.noise_start, args.noise_stop, args.noise_step, args.max_images
+    # Legacy noise-sweep flags: accepted but ignored (v1 has no lossy channel).
+    parser.add_argument("--noise-start", type=float, default=None, help=argparse.SUPPRESS)
+    parser.add_argument("--noise-stop", type=float, default=None, help=argparse.SUPPRESS)
+    parser.add_argument("--noise-step", type=float, default=None, help=argparse.SUPPRESS)
+    return parser.parse_args()
 
 
-def build_noise_schedule(start: float, stop: float, step: float) -> list[float]:
-    """Create a monotonic noise schedule."""
-    if step <= 0.0:
-        raise ValueError("noise-step must be positive")
+def _panel(image: np.ndarray, caption: str, height: int) -> Image.Image:
+    """Resize an image to a fixed height and add a caption bar above it."""
+    pil = Image.fromarray(image)
+    scale = height / pil.height
+    pil = pil.resize((max(1, int(pil.width * scale)), height), Image.BILINEAR)
+    bar = 18
+    panel = Image.new("RGB", (pil.width, height + bar), (20, 20, 20))
+    panel.paste(pil, (0, bar))
+    draw = ImageDraw.Draw(panel)
+    draw.text((2, 4), caption, fill=(255, 255, 255), font=_FONT)
+    return panel
 
-    levels: list[float] = []
-    current = start
-    while current <= stop + 1e-9:
-        levels.append(round(current, 4))
-        current += step
-    return levels
+
+def save_side_by_side(path: Path, panels: list[tuple[str, np.ndarray]], height: int = 256) -> None:
+    """Save a horizontal strip of captioned panels."""
+    rendered = [_panel(image, caption, height) for caption, image in panels]
+    total_width = sum(panel.width for panel in rendered) + 4 * (len(rendered) - 1)
+    strip = Image.new("RGB", (total_width, rendered[0].height), (20, 20, 20))
+    x = 0
+    for panel in rendered:
+        strip.paste(panel, (x, 0))
+        x += panel.width + 4
+    path.parent.mkdir(parents=True, exist_ok=True)
+    strip.save(path)
 
 
 def write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
@@ -103,162 +82,138 @@ def write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
     if not rows:
         path.write_text("", encoding="utf-8")
         return
-
-    fieldnames = sorted({key for row in rows for key in row.keys()})
+    fieldnames = sorted({key for row in rows for key in row})
     with path.open("w", encoding="utf-8", newline="") as file:
         writer = csv.DictWriter(file, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(rows)
 
 
-def save_plots(results_dir: Path, summary_rows: list[dict[str, Any]]) -> None:
-    """Generate compression/accuracy and noise/semantic plots."""
-    plots_dir = results_dir / "plots"
-    plots_dir.mkdir(parents=True, exist_ok=True)
+def run_experiment(args: argparse.Namespace) -> None:
+    """Run the full experiment over the image folder."""
+    config = load_config_file(args.config)
+    config["metrics"] = {**(config.get("metrics") or {}), "deep_features": args.deep_features}
+    settings = PipelineSettings.from_config(config)
 
-    if not summary_rows:
-        return
+    if not args.image_dir.exists():
+        raise FileNotFoundError(f"Image directory not found: {args.image_dir}")
 
-    noise_levels = [row["noise_level"] for row in summary_rows]
-    compression = [row["mean_compression_ratio"] for row in summary_rows]
-    semantic_score = [row["mean_semantic_score"] for row in summary_rows]
+    comparisons_dir = args.results_dir / "comparisons"
+    comparisons_dir.mkdir(parents=True, exist_ok=True)
 
-    indices = range(len(noise_levels))
-    width = 0.38
-
-    plt.figure(figsize=(10, 5))
-    plt.bar([index - width / 2 for index in indices], compression, width=width, label="Compression ratio")
-    plt.bar([index + width / 2 for index in indices], semantic_score, width=width, label="Semantic score")
-    plt.xticks(list(indices), [f"{level:.1f}" for level in noise_levels])
-    plt.xlabel("Noise level")
-    plt.ylabel("Mean value")
-    plt.title("Compression ratio vs semantic accuracy")
-    plt.legend()
-    plt.tight_layout()
-    plt.savefig(plots_dir / "compression_vs_accuracy.png", dpi=200)
-    plt.close()
-
-    plt.figure(figsize=(10, 5))
-    plt.plot(noise_levels, semantic_score, marker="o", linewidth=2.0)
-    plt.xlabel("Noise level")
-    plt.ylabel("Mean semantic score")
-    plt.title("Noise robustness of semantic communication")
-    plt.grid(True, alpha=0.3)
-    plt.tight_layout()
-    plt.savefig(plots_dir / "noise_vs_semantic_score.png", dpi=200)
-    plt.close()
-
-
-def run_experiment(
-    config: PipelineConfig,
-    noise_start: float,
-    noise_stop: float,
-    noise_step: float,
-    max_images: int | None,
-) -> None:
-    """Run the semantic communication experiment across images and noise levels."""
-    logger = logging.getLogger("semantic-experiment")
-
-    if not config.image_dir.exists():
-        raise FileNotFoundError(f"Image directory not found: {config.image_dir}")
-
-    config.results_dir.mkdir(parents=True, exist_ok=True)
-    (config.results_dir / "text").mkdir(exist_ok=True)
-    (config.results_dir / "semantic").mkdir(exist_ok=True)
-
-    extractor = ObjectExtractor(
-        model_path=config.model_path,
-        conf_threshold=config.conf_threshold,
-        max_objects=config.max_objects,
+    pipeline = SemanticPipeline(settings)
+    metrics = Metrics(
+        downstream_extractor=pipeline.extractor,
+        ocr_backend=pipeline.mode_classifier.ocr_backend,
+        deep_features=args.deep_features,
+        use_lpips=bool((config.get("metrics") or {}).get("lpips", False)),
     )
-    builder = OARBuilder(near_distance_threshold=config.near_distance_threshold)
-    encoder = OAREncoder()
-    decoder = OARDecoder()
-    reconstructor = SemanticReconstructor()
-    evaluator = Evaluator()
 
-    images = iter_images(config.image_dir)
-    if max_images is not None:
-        images = images[:max_images]
-    logger.info("Found %d image(s) for experiment.", len(images))
+    images = iter_images(args.image_dir)
+    if args.max_images is not None:
+        images = images[: args.max_images]
+    logger.info("Running experiment over %d image(s).", len(images))
 
-    samples: list[dict[str, Any]] = []
+    rows: list[dict[str, Any]] = []
     for image_path in images:
         try:
-            objects = extractor.extract(image_path)
-            original_oar = builder.build(objects)
-            encoded_packet = encoder.encode(original_oar)
-            original_text = reconstructor.reconstruct_text(original_oar)
-            samples.append(
-                {
-                    "image_id": image_path.stem,
-                    "image_path": image_path,
-                    "original_oar": original_oar,
-                    "encoded_packet": encoded_packet,
-                    "original_text": original_text,
-                }
+            raw_bytes = image_path.stat().st_size
+            out = pipeline.run(image_path)
+            original = out.original_image
+            semantic_recon = out.reconstruction.image
+            payload_bytes = out.size_report["total_bytes"]
+
+            semantic_metrics = metrics.compute(
+                original, semantic_recon, payload_bytes, raw_bytes, out.objects
+            )
+
+            text_payload = text_only_payload(out.received_payload)
+            text_recon = pipeline.reconstructor.reconstruct(
+                text_payload, pipeline.appearance_encoder
+            )
+            text_metrics = metrics.compute(
+                original, text_recon.image, text_payload.size_report()["total_bytes"],
+                raw_bytes, out.objects,
+            )
+
+            jpeg_image, jpeg_bytes = jpeg_baseline(original, payload_bytes)
+            jpeg_metrics = metrics.compute(
+                original, jpeg_image, jpeg_bytes, raw_bytes, out.objects
+            )
+
+            for method, result in (
+                ("semantic", semantic_metrics),
+                ("text_only", text_metrics),
+                ("jpeg_matched", jpeg_metrics),
+            ):
+                rows.append({"image_id": out.image_id, "method": method, **result.to_dict()})
+
+            save_side_by_side(
+                comparisons_dir / f"{out.image_id}.png",
+                [
+                    ("original", original),
+                    ("semantic", semantic_recon),
+                    ("text-only", text_recon.image),
+                    ("jpeg-matched", jpeg_image),
+                ],
+            )
+            logger.info(
+                "%s: semantic PSNR=%.2f recall=%.2f | jpeg PSNR=%.2f | text-only PSNR=%.2f",
+                out.image_id,
+                semantic_metrics.psnr,
+                semantic_metrics.downstream_class_recall,
+                jpeg_metrics.psnr,
+                text_metrics.psnr,
             )
         except Exception as exc:  # pylint: disable=broad-exception-caught
-            logger.exception("Skipping %s because extraction failed: %s", image_path.name, exc)
+            logger.exception("Failed on %s: %s", image_path.name, exc)
 
-    if not samples:
-        logger.warning("No successful image samples were produced; experiment will not continue.")
-        return
+    write_csv(args.results_dir / "experiment_results.csv", rows)
+    save_json(
+        args.results_dir / "experiment_results.json",
+        {"rows": rows, "summary": _summarize(rows), "image_count": len(images)},
+    )
+    logger.info("Experiment complete: %d row(s) over %d image(s).", len(rows), len(images))
+    _log_summary(_summarize(rows))
 
-    noise_levels = build_noise_schedule(noise_start, noise_stop, noise_step)
-    rows: list[dict[str, Any]] = []
 
-    for noise_level in noise_levels:
-        logger.info("Running experiment at noise level %.2f", noise_level)
-        channel = NoisyChannel(noise_level=noise_level, seed=config.seed)
+def _summarize(rows: list[dict[str, Any]]) -> dict[str, dict[str, float]]:
+    """Average the key numeric metrics per method."""
+    summary: dict[str, dict[str, float]] = {}
+    methods = sorted({row["method"] for row in rows})
+    keys = ["compression_ratio", "psnr", "downstream_class_recall", "payload_bytes"]
+    for method in methods:
+        group = [row for row in rows if row["method"] == method]
+        summary[method] = {
+            key: float(np.mean([row[key] for row in group if row.get(key) is not None]))
+            for key in keys
+            if any(row.get(key) is not None for row in group)
+        }
+    return summary
 
-        for sample in samples:
-            transmitted_packet = sample["encoded_packet"]
-            if config.enable_privacy:
-                transmitted_packet = channel.transmit(sample["encoded_packet"])
 
-            decoded_oar = decoder.decode(transmitted_packet)
-            reconstructed_text = reconstructor.reconstruct_text(decoded_oar)
-            metrics = evaluator.evaluate(
-                original_oar=sample["original_oar"],
-                decoded_oar=decoded_oar,
-                original_text=sample["original_text"],
-                reconstructed_text=reconstructed_text,
-                original_image_path=sample["image_path"],
-                semantic_size_bytes=transmitted_packet.semantic_size_bytes,
-                noise_level=noise_level,
-            )
-            quality_label = evaluator.label_quality(metrics)
-
-            row = {
-                "image_id": sample["image_id"],
-                "noise_level": noise_level,
-                "semantic_text": reconstructed_text,
-                "quality_label": quality_label,
-                **metrics.to_dict(),
-            }
-            rows.append(row)
-
-    summary_rows = evaluator.evaluate_noise_robustness(rows)
-    output_payload = {
-        "noise_levels": noise_levels,
-        "summary_by_noise": summary_rows,
-        "rows": rows,
-        "sample_count": len(samples),
-    }
-
-    save_json(config.results_dir / "experiment_results.json", output_payload)
-    write_csv(config.results_dir / "experiment_results.csv", rows)
-    save_plots(config.results_dir, summary_rows)
-    logger.info("Experiment complete with %d samples and %d rows.", len(samples), len(rows))
+def _log_summary(summary: dict[str, dict[str, float]]) -> None:
+    """Print a compact final results summary."""
+    logger.info("==== RESULTS SUMMARY (means) ====")
+    for method, values in summary.items():
+        logger.info(
+            "%-13s | compression=%.1fx PSNR=%.2f recall=%.2f payload=%.0fB",
+            method,
+            values.get("compression_ratio", 0.0),
+            values.get("psnr", 0.0),
+            values.get("downstream_class_recall", 0.0),
+            values.get("payload_bytes", 0.0),
+        )
 
 
 def main() -> None:
     """Application entrypoint."""
-    config, noise_start, noise_stop, noise_step, max_images = parse_args()
-    log_path = setup_experiment_logging(config.results_dir)
-    logging.getLogger("semantic-experiment").info("Logging to %s", log_path)
-    run_experiment(config, noise_start, noise_stop, noise_step, max_images)
+    args = parse_args()
+    log_path = setup_logging(args.results_dir)
+    logger.info("Logging to %s", log_path)
+    if args.noise_start is not None or args.noise_stop is not None or args.noise_step is not None:
+        logger.warning("Noise-sweep flags are ignored in v1 (the channel is pass-through).")
+    run_experiment(args)
 
 
 if __name__ == "__main__":

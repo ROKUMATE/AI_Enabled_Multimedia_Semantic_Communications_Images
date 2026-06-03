@@ -1,4 +1,13 @@
+# Core CPU pipeline (required). Runs end-to-end with only these.
 ultralytics>=8.2.0
 numpy>=1.26.0
 PyYAML>=6.0.0
 matplotlib>=3.8.0
+pillow>=10.0.0
+opencv-python>=4.9.0
+torch>=2.2.0
+torchvision>=0.17.0
+
+# Optional features (OCR, LPIPS, diffusion, analysis notebook) live in
+# requirements-extra.txt. The pipeline degrades gracefully without them.
+# See docs/SETUP.md for setup, running, training, and GPU instructions.

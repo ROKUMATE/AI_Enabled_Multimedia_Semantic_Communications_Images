@@ -214,3 +214,5 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+# Trained model checkpoints (see scripts/train_detector.py)
+checkpoints/

@@ -1,28 +1,7 @@
-compression_ratio,image_id,noise_level,object_match_accuracy,original_image_size_kb,psnr,quality_label,relation_match_accuracy,semantic_score,semantic_size_bytes,semantic_text,ssim,text_similarity
-116182.68965517242,IMG_8797,0.0,1.0,3290.330078125,40.0,high,1.0,1.0,29,"The scene appears simple or partially observed. This reconstructed scene appears to contain 2 objects: potted plant (obj_0), vase (obj_1). No explicit relations survived channel corruption, so spatial and interaction structure is limited.",1.0,1.0
-0.0,file,0.0,1.0,0.3505859375,40.0,high,1.0,1.0,0,"The semantic channel preserved no recognizable objects, so the scene is only partially recoverable.",1.0,1.0
-0.0,sample,0.0,1.0,0.3505859375,40.0,high,1.0,1.0,0,"The semantic channel preserved no recognizable objects, so the scene is only partially recoverable.",1.0,1.0
-116182.68965517242,IMG_8797,0.1,1.0,3290.330078125,40.0,high,1.0,1.0,29,"The scene appears simple or partially observed. This reconstructed scene appears to contain 2 objects: potted plant (obj_0), vase (obj_1). No explicit relations survived channel corruption, so spatial and interaction structure is limited.",1.0,1.0
-0.0,file,0.1,1.0,0.3505859375,40.0,high,1.0,1.0,0,"The semantic channel preserved no recognizable objects, so the scene is only partially recoverable.",1.0,1.0
-0.0,sample,0.1,1.0,0.3505859375,40.0,high,1.0,1.0,0,"The semantic channel preserved no recognizable objects, so the scene is only partially recoverable.",1.0,1.0
-116182.68965517242,IMG_8797,0.2,1.0,3290.330078125,40.0,high,1.0,1.0,29,"The scene appears simple or partially observed. This reconstructed scene appears to contain 2 objects: potted plant (obj_0), vase (obj_1). No explicit relations survived channel corruption, so spatial and interaction structure is limited.",1.0,1.0
-0.0,file,0.2,1.0,0.3505859375,40.0,high,1.0,1.0,0,"The semantic channel preserved no recognizable objects, so the scene is only partially recoverable.",1.0,1.0
-0.0,sample,0.2,1.0,0.3505859375,40.0,high,1.0,1.0,0,"The semantic channel preserved no recognizable objects, so the scene is only partially recoverable.",1.0,1.0
-116182.68965517242,IMG_8797,0.3,1.0,3290.330078125,40.0,high,1.0,1.0,29,"The scene appears simple or partially observed. This reconstructed scene appears to contain 2 objects: potted plant (obj_0), vase (obj_1). No explicit relations survived channel corruption, so spatial and interaction structure is limited.",1.0,1.0
-0.0,file,0.3,1.0,0.3505859375,40.0,high,1.0,1.0,0,"The semantic channel preserved no recognizable objects, so the scene is only partially recoverable.",1.0,1.0
-0.0,sample,0.3,1.0,0.3505859375,40.0,high,1.0,1.0,0,"The semantic channel preserved no recognizable objects, so the scene is only partially recoverable.",1.0,1.0
-116182.68965517242,IMG_8797,0.4,1.0,3290.330078125,40.0,high,1.0,1.0,29,"The scene appears simple or partially observed. This reconstructed scene appears to contain 2 objects: potted plant (obj_0), vase (obj_1). No explicit relations survived channel corruption, so spatial and interaction structure is limited.",1.0,1.0
-0.0,file,0.4,1.0,0.3505859375,40.0,high,1.0,1.0,0,"The semantic channel preserved no recognizable objects, so the scene is only partially recoverable.",1.0,1.0
-0.0,sample,0.4,1.0,0.3505859375,40.0,high,1.0,1.0,0,"The semantic channel preserved no recognizable objects, so the scene is only partially recoverable.",1.0,1.0
-336929.8,IMG_8797,0.5,0.5,3290.330078125,35.0,high,1.0,0.7,10,"The scene appears simple or partially observed. This reconstructed scene appears to contain 1 objects: vase (obj_1). No explicit relations survived channel corruption, so spatial and interaction structure is limited.",0.75,0.947136563876652
-0.0,file,0.5,1.0,0.3505859375,40.0,high,1.0,1.0,0,"The semantic channel preserved no recognizable objects, so the scene is only partially recoverable.",1.0,1.0
-0.0,sample,0.5,1.0,0.3505859375,40.0,high,1.0,1.0,0,"The semantic channel preserved no recognizable objects, so the scene is only partially recoverable.",1.0,1.0
-336929.8,IMG_8797,0.6,0.5,3290.330078125,35.0,high,1.0,0.7,10,"The scene appears simple or partially observed. This reconstructed scene appears to contain 1 objects: vase (obj_1). No explicit relations survived channel corruption, so spatial and interaction structure is limited.",0.75,0.947136563876652
-0.0,file,0.6,1.0,0.3505859375,40.0,high,1.0,1.0,0,"The semantic channel preserved no recognizable objects, so the scene is only partially recoverable.",1.0,1.0
-0.0,sample,0.6,1.0,0.3505859375,40.0,high,1.0,1.0,0,"The semantic channel preserved no recognizable objects, so the scene is only partially recoverable.",1.0,1.0
-336929.8,IMG_8797,0.7,0.5,3290.330078125,35.0,high,1.0,0.7,10,"The scene appears simple or partially observed. This reconstructed scene appears to contain 1 objects: vase (obj_1). No explicit relations survived channel corruption, so spatial and interaction structure is limited.",0.75,0.947136563876652
-0.0,file,0.7,1.0,0.3505859375,40.0,high,1.0,1.0,0,"The semantic channel preserved no recognizable objects, so the scene is only partially recoverable.",1.0,1.0
-0.0,sample,0.7,1.0,0.3505859375,40.0,high,1.0,1.0,0,"The semantic channel preserved no recognizable objects, so the scene is only partially recoverable.",1.0,1.0
-336929.8,IMG_8797,0.8,0.5,3290.330078125,35.0,high,1.0,0.7,10,"The scene appears simple or partially observed. This reconstructed scene appears to contain 1 objects: vase (obj_1). No explicit relations survived channel corruption, so spatial and interaction structure is limited.",0.75,0.947136563876652
-0.0,file,0.8,1.0,0.3505859375,40.0,high,1.0,1.0,0,"The semantic channel preserved no recognizable objects, so the scene is only partially recoverable.",1.0,1.0
-0.0,sample,0.8,1.0,0.3505859375,40.0,high,1.0,1.0,0,"The semantic channel preserved no recognizable objects, so the scene is only partially recoverable.",1.0,1.0
+compression_ratio,deep_feature_distance,downstream_center_error,downstream_class_recall,image_id,lpips,method,num_preserve_text,ocr_legibility,payload_bytes,psnr,raw_image_bytes
+12.585400243542908,,0.0297997103994033,0.5,000000000025,,semantic,0,,15603,11.889509743509825,196370
+366.3619402985075,,,0.0,000000000025,,text_only,0,,536,10.717587326267173,196370
+13.371237913659268,,0.029131591101953853,0.5,000000000025,,jpeg_matched,0,,14686,20.382398970929398,196370
+22.106796116504853,,0.0020567219396190415,0.6666666666666666,000000000064,,semantic,0,,9991,11.465457085999812,220869
+246.7810055865922,,,0.0,000000000064,,text_only,0,,895,10.666489601412684,220869
+22.330300272975432,,0.0033334420317787583,0.3333333333333333,000000000064,,jpeg_matched,0,,9891,23.875536583348932,220869

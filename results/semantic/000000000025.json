@@ -1,6 +1,10 @@
 {
   "image_id": "000000000025",
-  "original_oar": {
+  "scene_graph": {
+    "image_size": [
+      640,
+      426
+    ],
     "objects": [
       {
         "object_id": "obj_0",
@@ -11,7 +15,11 @@
           599.8892211914062,
           357.95098876953125
         ],
-        "confidence": 0.9048387408256531
+        "confidence": 0.9048387408256531,
+        "mode": "regenerate",
+        "importance": 0.11702196911966811,
+        "selected": true,
+        "ocr_text": null
       },
       {
         "object_id": "obj_1",
@@ -22,70 +30,54 @@
           181.6600341796875,
           419.98828125
         ],
-        "confidence": 0.4307350516319275
+        "confidence": 0.4307350516319275,
+        "mode": "regenerate",
+        "importance": 0.004119366438066063,
+        "selected": true,
+        "ocr_text": null
       }
     ],
-    "attributes": {
-      "obj_0": {},
-      "obj_1": {}
+    "relations": []
+  },
+  "size_report": {
+    "structure_bytes": 521,
+    "appearance_bytes": 15071,
+    "crops_raw_bytes": 15045,
+    "num_crops": 2,
+    "total_bytes": 15603
+  },
+  "objects": [
+    {
+      "object_id": "obj_0",
+      "name": "giraffe",
+      "bbox": [
+        383.28863525390625,
+        63.89208984375,
+        599.8892211914062,
+        357.95098876953125
+      ],
+      "confidence": 0.9048387408256531,
+      "mode": "regenerate",
+      "importance": 0.11702196911966811,
+      "selected": true,
+      "ocr_text": null
     },
-    "relations": []
-  },
-  "decoded_oar": {
-    "objects": [
-      {
-        "object_id": "obj_0",
-        "name": "giraffe",
-        "bbox": [
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "confidence": 0.0
-      },
-      {
-        "object_id": "obj_1",
-        "name": "giraffe",
-        "bbox": [
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "confidence": 0.0
-      }
-    ],
-    "attributes": {},
-    "relations": []
-  },
-  "encoded_packet": {
-    "payload": "obj_0=giraffe|obj_1=giraffe",
-    "bit_estimate": 216,
-    "encoding": "semantic-token",
-    "semantic_size_bytes": 27
-  },
-  "transmitted_packet": {
-    "payload": "obj_0=giraffe|obj_1=giraffe",
-    "bit_estimate": 216,
-    "encoding": "semantic-token",
-    "semantic_size_bytes": 27
-  },
-  "semantic_text": "The scene appears simple or partially observed. This reconstructed scene appears to contain 2 objects: giraffe (obj_0), giraffe (obj_1). No explicit relations survived channel corruption, so spatial and interaction structure is limited.",
-  "metrics": {
-    "psnr": 40.0,
-    "ssim": 1.0,
-    "object_match_accuracy": 1.0,
-    "relation_match_accuracy": 1.0,
-    "text_similarity": 1.0,
-    "semantic_score": 1.0,
-    "original_image_size_kb": 191.767578125,
-    "semantic_size_bytes": 27,
-    "compression_ratio": 7272.962962962963,
-    "noise_level": 0.2
-  },
-  "quality_label": "high",
-  "original_image_size_kb": 191.767578125,
-  "semantic_size_bytes": 27,
-  "compression_ratio": 7272.962962962963
+    {
+      "object_id": "obj_1",
+      "name": "giraffe",
+      "bbox": [
+        49.257415771484375,
+        354.5548095703125,
+        181.6600341796875,
+        419.98828125
+      ],
+      "confidence": 0.4307350516319275,
+      "mode": "regenerate",
+      "importance": 0.004119366438066063,
+      "selected": true,
+      "ocr_text": null
+    }
+  ],
+  "relations": [],
+  "text": "The scene appears simple or partially observed. This reconstructed scene appears to contain 2 objects: giraffe (obj_0), giraffe (obj_1). No explicit relations survived channel corruption, so spatial and interaction structure is limited."
 }

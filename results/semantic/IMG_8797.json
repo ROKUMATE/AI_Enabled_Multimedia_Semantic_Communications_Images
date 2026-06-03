@@ -1,6 +1,10 @@
 {
   "image_id": "IMG_8797",
-  "original_oar": {
+  "scene_graph": {
+    "image_size": [
+      3213,
+      5712
+    ],
     "objects": [
       {
         "object_id": "obj_0",
@@ -11,7 +15,11 @@
           3213.0,
           4949.7646484375
         ],
-        "confidence": 0.6172596216201782
+        "confidence": 0.6172596216201782,
+        "mode": "regenerate",
+        "importance": 0.4307456226372053,
+        "selected": true,
+        "ocr_text": null
       },
       {
         "object_id": "obj_1",
@@ -22,70 +30,54 @@
           1770.695068359375,
           4997.3427734375
         ],
-        "confidence": 0.4487600028514862
+        "confidence": 0.4487600028514862,
+        "mode": "regenerate",
+        "importance": 0.04912137454195614,
+        "selected": true,
+        "ocr_text": null
       }
     ],
-    "attributes": {
-      "obj_0": {},
-      "obj_1": {}
+    "relations": []
+  },
+  "size_report": {
+    "structure_bytes": 514,
+    "appearance_bytes": 951822,
+    "crops_raw_bytes": 951796,
+    "num_crops": 2,
+    "total_bytes": 952347
+  },
+  "objects": [
+    {
+      "object_id": "obj_0",
+      "name": "potted plant",
+      "bbox": [
+        24.095157623291016,
+        866.774169921875,
+        3213.0,
+        4949.7646484375
+      ],
+      "confidence": 0.6172596216201782,
+      "mode": "regenerate",
+      "importance": 0.4307456226372053,
+      "selected": true,
+      "ocr_text": null
     },
-    "relations": []
-  },
-  "decoded_oar": {
-    "objects": [
-      {
-        "object_id": "obj_0",
-        "name": "potted plant",
-        "bbox": [
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "confidence": 0.0
-      },
-      {
-        "object_id": "obj_1",
-        "name": "vase",
-        "bbox": [
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "confidence": 0.0
-      }
-    ],
-    "attributes": {},
-    "relations": []
-  },
-  "encoded_packet": {
-    "payload": "obj_0=potted plant|obj_1=vase",
-    "bit_estimate": 232,
-    "encoding": "semantic-token",
-    "semantic_size_bytes": 29
-  },
-  "transmitted_packet": {
-    "payload": "obj_0=potted plant|obj_1=vase",
-    "bit_estimate": 232,
-    "encoding": "semantic-token",
-    "semantic_size_bytes": 29
-  },
-  "semantic_text": "The scene appears simple or partially observed. This reconstructed scene appears to contain 2 objects: potted plant (obj_0), vase (obj_1). No explicit relations survived channel corruption, so spatial and interaction structure is limited.",
-  "metrics": {
-    "psnr": 40.0,
-    "ssim": 1.0,
-    "object_match_accuracy": 1.0,
-    "relation_match_accuracy": 1.0,
-    "text_similarity": 1.0,
-    "semantic_score": 1.0,
-    "original_image_size_kb": 3290.330078125,
-    "semantic_size_bytes": 29,
-    "compression_ratio": 116182.68965517242,
-    "noise_level": 0.2
-  },
-  "quality_label": "high",
-  "original_image_size_kb": 3290.330078125,
-  "semantic_size_bytes": 29,
-  "compression_ratio": 116182.68965517242
+    {
+      "object_id": "obj_1",
+      "name": "vase",
+      "bbox": [
+        158.57998657226562,
+        2945.385009765625,
+        1770.695068359375,
+        4997.3427734375
+      ],
+      "confidence": 0.4487600028514862,
+      "mode": "regenerate",
+      "importance": 0.04912137454195614,
+      "selected": true,
+      "ocr_text": null
+    }
+  ],
+  "relations": [],
+  "text": "The scene appears simple or partially observed. This reconstructed scene appears to contain 2 objects: potted plant (obj_0), vase (obj_1). No explicit relations survived channel corruption, so spatial and interaction structure is limited."
 }

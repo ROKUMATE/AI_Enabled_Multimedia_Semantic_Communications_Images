@@ -1,69 +1,52 @@
 # Commands Used To Check The Project
 
-This document records the commands I ran to verify that the project builds and runs.
+This document records the commands used to verify the v1 semantic image
+communication pipeline builds and runs end-to-end on CPU.
 
 ## 1. Compile the Python sources
 
 ```bash
-/Users/rokum/Rokum/sem/wct/sementic-analysis-dataset-image-to-text/.venv/bin/python -m compileall main.py experiment.py src
+.venv/bin/python -m compileall main.py experiment.py scripts src
 ```
 
-Result: passed. All Python modules compiled successfully.
-
-## 2. Smoke test the semantic codec path
-
-```python
-from src.encoder import OAREncoder
-from src.decoder import OARDecoder
-from src.channel import NoisyChannel
-from src.types import OARRepresentation, DetectedObject, Relation
-
-oar = OARRepresentation(
-    objects=[
-        DetectedObject(object_id='obj_0', name='person', bbox=(0, 0, 10, 10), confidence=0.9),
-        DetectedObject(object_id='obj_1', name='dog', bbox=(20, 20, 30, 30), confidence=0.8),
-    ],
-    relations=[Relation(subject_id='obj_0', predicate='near', object_id='obj_1')],
-)
-encoder = OAREncoder()
-channel = NoisyChannel(noise_level=0.2, seed=42)
-decoder = OARDecoder()
-packet = encoder.encode(oar)
-noisy_packet = channel.transmit(packet)
-decoded = decoder.decode(noisy_packet)
-print(packet.to_dict())
-print(noisy_packet.to_dict())
-print(decoded.to_dict())
-```
-
-Result: passed. The payload encoded as compact semantic tokens, channel transmission succeeded, and decoding returned a valid partial OAR graph.
-
-## 3. Run the main pipeline without privacy noise
+## 2. Run the unit tests
 
 ```bash
-/Users/rokum/Rokum/sem/wct/sementic-analysis-dataset-image-to-text/.venv/bin/python main.py --config config.yaml --no-enable-privacy
+.venv/bin/python -m unittest discover -s tests
 ```
 
-Result: passed. The pipeline found 2 images in `data/images/` and completed processing both images successfully.
+Covers payload (de)serialization, importance scoring, mode classification, and
+metrics.
 
-## 4. Run the experiment sweep on one image
+## 3. Run the main pipeline
 
 ```bash
-/Users/rokum/Rokum/sem/wct/sementic-analysis-dataset-image-to-text/.venv/bin/python experiment.py --config config.yaml --max-images 1 --noise-start 0.0 --noise-stop 0.5 --noise-step 0.5
+.venv/bin/python main.py --config config.yaml
 ```
 
-Result: passed. The experiment runner completed a 2-point noise sweep, wrote experiment outputs, and generated plots.
+Writes reconstructed images, text descriptions, and per-image scene graphs under
+`results/` (`reconstructed/`, `text/`, `semantic/`).
 
-## 5. Run all checks with one command
+## 4. Run the experiment runner (configs + baselines + side-by-sides)
+
+```bash
+.venv/bin/python experiment.py --config config.yaml --max-images 2
+```
+
+Writes `results/experiment_results.{csv,json}` and side-by-side comparison images
+under `results/comparisons/` (original | semantic | text-only | jpeg-matched).
+
+## 5. Run everything
 
 ```bash
 make check
 ```
 
-Result: this target runs the three verification steps above in order: compile the Python sources, run the main pipeline without channel noise, and run the lightweight experiment sweep.
+Runs compile + tests + main pipeline + experiment in order.
 
 ## Notes
 
-- All commands were run from the project virtual environment.
-- The main pipeline writes outputs under `results/`.
-- The experiment runner writes JSON, CSV, logs, and plots under `results/`.
+- The core path runs on CPU with no GPU. Diffusion, OCR, LPIPS, and the
+  deep-feature metric are optional and degrade gracefully when their
+  dependencies are not installed (see `requirements.txt`).
+- All outputs are written under `results/`.

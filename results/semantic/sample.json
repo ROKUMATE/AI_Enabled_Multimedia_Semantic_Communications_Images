@@ -1,42 +1,21 @@
 {
   "image_id": "sample",
-  "original_oar": {
+  "scene_graph": {
+    "image_size": [
+      128,
+      128
+    ],
     "objects": [],
-    "attributes": {},
     "relations": []
   },
-  "decoded_oar": {
-    "objects": [],
-    "attributes": {},
-    "relations": []
+  "size_report": {
+    "structure_bytes": 52,
+    "appearance_bytes": 4,
+    "crops_raw_bytes": 0,
+    "num_crops": 0,
+    "total_bytes": 67
   },
-  "encoded_packet": {
-    "payload": "",
-    "bit_estimate": 0,
-    "encoding": "semantic-token",
-    "semantic_size_bytes": 0
-  },
-  "transmitted_packet": {
-    "payload": "",
-    "bit_estimate": 0,
-    "encoding": "semantic-token",
-    "semantic_size_bytes": 0
-  },
-  "semantic_text": "The semantic channel preserved no recognizable objects, so the scene is only partially recoverable.",
-  "metrics": {
-    "psnr": 40.0,
-    "ssim": 1.0,
-    "object_match_accuracy": 1.0,
-    "relation_match_accuracy": 1.0,
-    "text_similarity": 1.0,
-    "semantic_score": 1.0,
-    "original_image_size_kb": 0.3505859375,
-    "semantic_size_bytes": 0,
-    "compression_ratio": 0.0,
-    "noise_level": 0.2
-  },
-  "quality_label": "high",
-  "original_image_size_kb": 0.3505859375,
-  "semantic_size_bytes": 0,
-  "compression_ratio": 0.0
+  "objects": [],
+  "relations": [],
+  "text": "The semantic channel preserved no recognizable objects, so the scene is only partially recoverable."
 }

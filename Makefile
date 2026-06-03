@@ -1,15 +1,18 @@
 PYTHON ?= .venv/bin/python
 CONFIG ?= config.yaml
 
-.PHONY: check compile run experiment
+.PHONY: check compile test run experiment
 
-check: compile run experiment
+check: compile test run experiment
 
 compile:
-	$(PYTHON) -m compileall main.py experiment.py src
+	$(PYTHON) -m compileall main.py experiment.py scripts src
+
+test:
+	$(PYTHON) -m unittest discover -s tests
 
 run:
-	$(PYTHON) main.py --config $(CONFIG) --no-enable-privacy
+	$(PYTHON) main.py --config $(CONFIG)
 
 experiment:
-	$(PYTHON) experiment.py --config $(CONFIG) --max-images 1 --noise-start 0.0 --noise-stop 0.5 --noise-step 0.5
+	$(PYTHON) experiment.py --config $(CONFIG) --max-images 2

@@ -1,188 +1,187 @@
-# Semantic Image Communication using OAR and AI-based Reconstruction
+# AI-Enabled Multimedia Semantic Communication for Images
 
-This project implements a modular semantic communication pipeline for **6G-oriented semantic image transmission**. It compresses object-attribute-relation (OAR) graphs into compact tokens, simulates semantic channel noise, reconstructs partial graphs robustly, and reports research-style metrics and plots.
+A modular semantic communication pipeline for **image transmission**. Instead of
+sending raw pixels, the transmitter sends a compact **scene graph** plus
+**compressed crops of only the important objects**; the receiver regenerates a
+similar image and composites the received crops back at their locations, and
+also emits a text description.
+
+This is **v1 — prove the pipeline**. There is no lossy channel yet (only a
+pass-through `IdentityChannel`), but every interface is designed so a real
+wireless channel, learned models, and appearance embeddings drop in later
+without changing callers. See [PLAN.md](PLAN.md) for the full design and the
+TODO backlog.
 
 ## Pipeline
 
 ```mermaid
 flowchart LR
-		A[Image] --> B[YOLO object extraction]
-		B --> C[OAR graph builder]
-		C --> D[Semantic encoder]
-		D --> E[Noisy semantic channel]
-		E --> F[Robust decoder]
-		F --> G[Natural language reconstruction]
-		F --> H[Evaluation metrics]
-		H --> I[JSON, CSV, plots]
+    A[Image] --> B[ObjectExtractor<br/>YOLO]
+    B --> C[RelationBuilder<br/>rule-based]
+    C --> D[ImportanceScorer]
+    D --> E[ObjectModeClassifier<br/>preserve / regenerate]
+    E --> F[CropCompressor]
+    F --> G[SemanticPayload<br/>structure + appearance streams]
+    G --> H[Channel<br/>IdentityChannel]
+    H --> I[Reconstructor<br/>compositional / diffusion]
+    I --> J[Reconstructed image]
+    I --> K[Text description]
+    J --> L[Metrics + baselines]
 ```
 
-## Dataset Generation & Core Logic
+**Key idea — per-object mode:**
+- `regenerate`: ordinary objects; a similar-looking version is acceptable, so a
+  low/medium-quality crop is sent.
+- `preserve`: objects whose exact appearance must survive (text/documents,
+  faces, logos). These are sent as a high-quality crop; text regions are also
+  OCR'd and can be re-rendered crisply. Generative reconstruction is **never**
+  applied to text regions.
 
-This project constructs a **Semantic Knowledge Graph Dataset**. Instead of transmitting millions of raw pixels (as in traditional 5G/4G systems), we extract the "meaning" of the image and build a structured dataset that represents it. This dataset essentially functions as the ground-truth "Semantic Payload" for 6G communication simulations.
+## Two-stream payload (future-proofing)
 
-### What is the Dataset?
-The generated dataset (`results/dataset.json` and individual `<image_id>.json` files) consists of **OAR Graphs (Object-Attribute-Relation)**:
-1. **Objects**: The distinct entities in the image (e.g., "person", "car", "plant") along with their bounding box coordinates.
-2. **Attributes**: Descriptions applied to these objects (e.g., confidence scores, or simulated properties like "red", "moving").
-3. **Relations**: Spatial or semantic connections between objects (e.g., Object A is `left_of`, `above`, or `near` Object B).
+The transmitted [`SemanticPayload`](src/payload.py) carries two
+**independently-degradable** streams, each tagged with a `priority`
+(0 = highest protection):
 
-By logging these graphs *before* and *after* noise is applied, the dataset provides a perfect testbed for evaluating **Semantic Communication Reliability**, **Compression Ratios**, and **Knowledge Recovery** algorithms.
+1. **structure stream** — the compact scene graph (object ids, classes, boxes,
+   relations, per-object mode, OCR text, image size).
+2. **appearance stream** — `object_id -> compressed crop bytes`.
 
-### Core Logic
-The pipeline operates on the following core technical sequence:
-1. **Semantic Extraction (YOLOv8)**: The image acts as the raw physical signal. We use a neural network (YOLO) to perform semantic extraction, identifying bounding boxes and classes.
-2. **Graph Construction (OAR Builder)**: We compute geometric relationships using the bounding box centroids to determine spatial relationships (`left_of`, `above`, `inside`, `near`). This converts isolated detections into a connected **knowledge graph**.
-3. **Compact Tokenization (Codec)**: To simulate ultra-low bandwidth (a key 6G requirement), the OAR JSON graph is parsed into extremely compact, pipe-separated string tokens (e.g., `OBJ|0|person|12|14` and `REL|0|1|left_of`). This achieves extreme compression ratios compared to the original image bytes.
-4. **Channel Degradation (Simulation)**: The semantic payload is sent through a simulated noisy channel (`channel.py`). Instead of flipping bits, it drops semantic tokens (entire objects or relations) probabilistically based on the `noise_level` config, simulating semantic fading or packet loss.
-5. **Partial Re-assembly & NLP Generation**: The receiving end takes the damaged tokens, repairs broken graph links (ignoring relations that reference dropped objects), and feeds the surviving OAR graph into a Natural Language Generator to reconstruct the image's meaning in English.
-6. **Evaluation Metrics**: We calculate a `Semantic Score` by mathematically comparing the received OAR graph against the original ground-truth graph inside our generated dataset.
+Serialization is a length-prefixed binary container (no base64), so reported
+byte sizes are the true on-wire sizes. A future `Channel` will corrupt the two
+streams independently with unequal error protection — no caller changes needed.
 
-## What Changed
-
-- Semantic payloads now use compact tokens instead of raw JSON.
-- The channel can randomly drop objects and relations with a configurable noise level.
-- The decoder repairs partial graphs and tolerates corrupted payloads.
-- Evaluation now includes semantic score, compression ratio, image size, and noise tracking.
-- Experiments sweep noise levels from `0.0` to `0.5` and export plots.
-
-## Project Structure
+## Module layout
 
 ```text
-data/
-	images/
 src/
-	__init__.py
-	types.py
-	extract.py
-	oar_builder.py
-	semantic_codec.py
-	encoder.py
-	channel.py
-	decoder.py
-	reconstruct.py
-	evaluate.py
-main.py
-experiment.py
-config.yaml
-requirements.txt
-results/
-	semantic/
-	text/
-	logs/
-	plots/
+  types.py            SceneObject, ObjectMode, Stream, Relation, OAR types
+  extractors/         ObjectExtractor (base) + YoloExtractor + LearnedObjectExtractor
+  relations/          RelationBuilder (base) + RuleBased + Learned (stub)
+  importance.py       ImportanceScorer (base) + HeuristicImportanceScorer
+  mode_classifier.py  ObjectModeClassifier (forced classes + OCR)
+  ocr.py              OCR backend abstraction (easyocr / pytesseract / none)
+  appearance/         AppearanceEncoder (base) + CropCompressor + EmbeddingEncoder (stub)
+  payload.py          SemanticPayload (two streams) + binary (de)serialization
+  channels/           Channel (base) + IdentityChannel
+  reconstructors/     Reconstructor (base) + Compositional + Diffusion + text
+  metrics.py          PSNR, downstream match, deep-feature*, LPIPS*, OCR legibility*
+  baselines.py        JPEG-matched + text-only
+  pipeline.py         SemanticPipeline orchestration + PipelineSettings
+main.py               single run over a folder (image -> image + text + scene graph)
+experiment.py         ExperimentRunner: configs + baselines + side-by-side images
+scripts/train_detector.py   training skeleton for our own detector (P5)
+tests/                unittest suite (payload, importance, mode, metrics)
 ```
+`*` optional, behind a flag / graceful fallback when the dependency is absent.
 
-## Core Modules
-
-- `src/extract.py`: YOLOv8-based object extraction.
-- `src/oar_builder.py`: Rule-based OAR construction and spatial relations.
-- `src/semantic_codec.py`: Compact token serialization and tolerant parsing.
-- `src/encoder.py`: Semantic token encoding and bitrate estimation.
-- `src/channel.py`: Random object and relation drop with reproducible seeds.
-- `src/decoder.py`: Partial-graph reconstruction from noisy semantic payloads.
-- `src/reconstruct.py`: Relation-aware natural language descriptions.
-- `src/evaluate.py`: Semantic accuracy, compression metrics, and robustness summaries.
-- `main.py`: Single-run end-to-end pipeline.
-- `experiment.py`: Multi-image, multi-noise experiment runner with plots.
+Every model-bearing step lives behind a base class and is selected from config,
+so a learned/alternative implementation can be swapped in without touching the
+orchestration.
 
 ## Installation
 
 ```bash
-pip install -r requirements.txt
+pip install -r requirements.txt          # core CPU path
+pip install -r requirements-extra.txt    # optional: OCR, LPIPS, diffusion, notebook
 ```
 
-Add images to `data/images/` before running the pipeline.
+The core CPU path needs only `requirements.txt`. OCR (`easyocr`/`pytesseract`),
+`lpips`, `diffusers`, and the analysis notebook deps are **optional** — the
+pipeline runs without them and logs a warning when a feature is unavailable.
 
-## Run the Pipeline
+**Full setup, running, training, and GPU instructions: [docs/SETUP.md](docs/SETUP.md).**
 
-Default run:
+## Run
+
+Single run over `data/images/` (writes reconstructed images, text, scene graphs):
 
 ```bash
 python main.py
 ```
 
-Override config values on the command line:
+Useful overrides (all config keys can also be set in `config.yaml`):
 
 ```bash
-python main.py --noise-level 0.3 --max-objects 12 --seed 7 --no-enable-privacy
+python main.py --extractor yolo --reconstructor compositional --max-objects 12 --seed 7
 ```
 
-Use a different config file:
+Experiment runner — every image through the semantic config + baselines, with a
+results table and side-by-side comparison images:
 
 ```bash
-python main.py --config config.yaml
+python experiment.py                 # all images
+python experiment.py --max-images 5  # subset
+python experiment.py --deep-features # also compute VGG deep-feature distance
 ```
 
-## Run Experiments
-
-The experiment runner sweeps noise levels from `0.0` to `0.5` by default and stores aggregated results:
+Run the tests:
 
 ```bash
-python experiment.py
+python -m unittest discover -s tests
 ```
 
-Useful overrides:
+## Configuration (`config.yaml`)
 
-```bash
-python experiment.py --noise-start 0.0 --noise-stop 0.5 --noise-step 0.1 --max-images 20
-```
+| Key | Meaning |
+|-----|---------|
+| `extractor` | `yolo` (default) or `learned` (our detector; falls back to YOLO if no checkpoint) |
+| `model_path` / `checkpoint_path` | YOLO weights / learned-detector checkpoint |
+| `conf_threshold`, `max_objects` | detection thresholds |
+| `relation_builder` | `rule_based` (default) or `learned` (stub) |
+| `near_distance_threshold` | distance (px) for `near` / `interacting_with` relations |
+| `importance.budget` | top-k objects sent as crops (default 3); preserve objects always sent |
+| `preserve_classes` | classes forced to `preserve` mode (default `[person]`) |
+| `ocr.enabled`, `ocr.backend` | OCR text detection (`auto`/`easyocr`/`pytesseract`/`none`) |
+| `appearance.format` | crop container: `JPEG` or `WEBP` |
+| `appearance.preserve_quality` / `regenerate_quality` | per-mode crop quality (95 / 35) |
+| `streams.structure_priority` / `appearance_priority` | stream priorities (0 = highest) |
+| `channel` | `identity` (only option in v1) |
+| `reconstructor` | `compositional` (CPU default) or `diffusion` (flag-gated) |
+| `background_color` | base canvas color for compositional reconstruction |
+| `diffusion.enabled`, `diffusion.model_id` | enable GPU diffusion background (falls back to compositional) |
+| `metrics.deep_features`, `metrics.lpips` | enable optional perceptual metrics |
+| `seed` | reproducibility seed |
 
-## Configuration
+Legacy keys (`noise_level`, `enable_privacy`) are still accepted but unused by
+the v1 image path (the channel is pass-through).
 
-`config.yaml` controls the default research setup:
+## Metrics & baselines
 
-```yaml
-noise_level: 0.2
-max_objects: 5
-enable_privacy: true
-```
+For each image the experiment runner reports, per method:
 
-Supported keys include:
+- **payload size** and **compression ratio** vs the raw image,
+- **PSNR**,
+- **downstream detector match** — re-run the detector on the reconstruction and
+  compare detected classes/positions to the original (class recall + center error),
+- optional **deep-feature cosine distance** (torchvision VGG), **LPIPS**, and
+  **OCR legibility** for preserve-text objects.
 
-- `image_dir`
-- `results_dir`
-- `model_path`
-- `noise_level`
-- `max_objects`
-- `near_distance_threshold`
-- `conf_threshold`
-- `seed`
-- `enable_privacy`
+Baselines: **JPEG at matched payload size** (apples-to-apples on bytes) and a
+**text-only** reconstruction (no crops) — the latter shows that transmitting
+crops actually improves downstream recovery.
 
 ## Outputs
 
-The pipeline writes outputs under `results/`:
-
-- `results/semantic/<image_id>.json`: Per-image semantic trace.
-- `results/text/<image_id>.txt`: Reconstructed text description.
-- `results/dataset.json`: Dataset-style summary for downstream analysis.
-- `results/evaluation_metrics.json`: Per-image metric records.
-- `results/logs/pipeline.log`: Main pipeline log.
-- `results/experiment_results.json`: Experiment summary and raw rows.
-- `results/experiment_results.csv`: Experiment table.
-- `results/plots/compression_vs_accuracy.png`: Compression ratio vs semantic score.
-- `results/plots/noise_vs_semantic_score.png`: Noise robustness curve.
-
-## Reproducing the Study
-
-1. Install dependencies.
-2. Place test images in `data/images/`.
-3. Run `python main.py` for a single configuration.
-4. Run `python experiment.py` to sweep noise levels.
-5. Inspect the JSON, CSV, and plot outputs in `results/`.
-
-## Example Reconstruction
-
-For a partial scene with a person and a dog, the reconstructor may produce a description such as:
-
 ```text
-The scene likely centers on people or human activity. This reconstructed scene appears to contain 2 objects: person (obj_0), dog (obj_1). Observed relations include person is near dog.
+results/
+  reconstructed/<id>.png    reconstructed image (main.py)
+  text/<id>.txt             text description
+  semantic/<id>.json        scene graph + payload size report
+  dataset.json              per-image summary
+  comparisons/<id>.png      original | semantic | text-only | jpeg side-by-side (experiment.py)
+  experiment_results.csv    metrics table (one row per image x method)
+  experiment_results.json   rows + per-method summary
+  logs/                     pipeline / experiment logs
 ```
 
-## Research Notes
+## Future work (scaffolded now — see PLAN.md and docs/SETUP.md §5–§7)
 
-- The semantic codec is intentionally compact and deterministic for reproducible experiments.
-- The channel simulates semantic information loss rather than raw bit errors.
-- The decoder keeps partial graphs valid so robustness can be measured instead of failing hard.
-- You can replace the rule-based OAR builder with a learned relation model in future work.
-
+- **Wireless channel**: `AWGNChannel` / `RayleighChannel` with per-stream
+  unequal error protection (the `Channel` base + priority-tagged streams are ready).
+- **Learned relations**: train `LearnedRelationBuilder` (currently a stub).
+- **Appearance embeddings**: finish `EmbeddingEncoder` (CLIP) to send embeddings
+  instead of raw crops.
+- **Own detector**: implement `scripts/train_detector.py`; `LearnedObjectExtractor`
+  loads the checkpoint if present, else falls back to YOLO.
+- **Diffusion background**: enable `DiffusionReconstructor` on GPU.

@@ -1,9 +1,57 @@
+# --- I/O ---
 image_dir: data/images
 results_dir: results
+
+# --- detection ---
+extractor: yolo                 # yolo | learned
 model_path: yolov8n.pt
-noise_level: 0.2
-max_objects: 20
-near_distance_threshold: 120.0
+checkpoint_path: checkpoints/detector.pt   # used when extractor: learned
 conf_threshold: 0.25
+max_objects: 20
+
+# --- relations ---
+relation_builder: rule_based    # rule_based | learned
+near_distance_threshold: 120.0
+
+# --- importance / selection ---
+importance:
+  budget: 3                     # top-k objects sent as compressed crops
+
+# --- object mode (preserve vs regenerate) ---
+preserve_classes: [person]      # classes always sent as high-quality crops
+ocr:
+  enabled: true
+  backend: auto                 # auto | easyocr | pytesseract | none
+
+# --- appearance encoding ---
+appearance:
+  format: JPEG                  # JPEG | WEBP
+  preserve_quality: 95
+  regenerate_quality: 35
+
+# --- payload streams (priorities; 0 = highest protection) ---
+streams:
+  structure_priority: 0
+  appearance_priority: 1
+
+# --- channel (v1: pass-through only) ---
+channel: identity
+
+# --- reconstruction ---
+reconstructor: compositional    # compositional | diffusion
+background_color: [127, 127, 127]
+diffusion:
+  enabled: false                # requires GPU + diffusers; falls back to compositional
+  model_id: stabilityai/sd-turbo
+
+# --- metrics (heavy/optional metrics default off; PSNR + downstream always run) ---
+metrics:
+  deep_features: false          # torchvision VGG cosine (downloads weights)
+  lpips: false                  # requires the `lpips` package
+
+# --- reproducibility ---
 seed: 42
+
+# --- legacy keys (retained for backward compatibility; unused by the v1 image path) ---
+noise_level: 0.2
 enable_privacy: true
